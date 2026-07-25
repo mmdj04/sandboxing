@@ -87,24 +87,18 @@ export default async function DocPage({ params }: DocPageProps) {
 
       <Separator className="my-8" />
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            {prevDoc ? (
-              <PaginationPrevious href={`/docs/${prevDoc.slug.join("/")}`} text={prevDoc.title} />
-            ) : (
-              <PaginationPrevious href="#" className="pointer-events-none opacity-50" text="" />
-            )}
-          </PaginationItem>
-          <PaginationItem>
-            {nextDoc ? (
-              <PaginationNext href={`/docs/${nextDoc.slug.join("/")}`} text={nextDoc.title} />
-            ) : (
-              <PaginationNext href="#" className="pointer-events-none opacity-50" text="" />
-            )}
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <div className="flex justify-between items-center">
+        {prevDoc ? (
+          <PaginationPrevious href={`/docs/${prevDoc.slug.join("/")}`} text={prevDoc.title} />
+        ) : (
+          <span />
+        )}
+        {nextDoc ? (
+          <PaginationNext href={`/docs/${nextDoc.slug.join("/")}`} text={nextDoc.title} />
+        ) : (
+          <span />
+        )}
+      </div>
     </article>
   );
 }
