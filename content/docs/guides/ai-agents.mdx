@@ -1,0 +1,106 @@
+---
+title: AI Agents
+description: Build autonomous AI agents with our open-source toolkit.
+order: 2
+---
+
+# AI Agents
+
+Our AI agent framework makes it easy to build autonomous, intelligent agents that can reason, use tools, and complete complex tasks.
+
+## Features
+
+- **Tool Use** — Agents can use any tool you define
+- **Memory** — Persistent and working memory
+- **Reasoning** — Chain-of-thought reasoning
+- **Streaming** — Real-time response streaming
+- **Multi-Agent** — Agent collaboration
+
+## Quick Start
+
+```tsx
+import { Agent, Tool } from "@open-source-ai/ai";
+
+const searchTool: Tool = {
+  name: "search",
+  description: "Search the web",
+  execute: async (query) => {
+    // Your search implementation
+    return results;
+  },
+};
+
+const agent = new Agent({
+  model: "gpt-4",
+  tools: [searchTool],
+  systemPrompt: "You are a helpful research assistant.",
+});
+
+const response = await agent.run("Find information about open-source AI");
+```
+
+## Agent Architecture
+
+```
+┌─────────────────────────────────────┐
+│           Agent Runtime             │
+├─────────────────────────────────────┤
+│  ┌─────────┐  ┌─────────────────┐  │
+│  │ Memory  │  │   Reasoning     │  │
+│  │         │  │   Engine        │  │
+│  └─────────┘  └─────────────────┘  │
+├─────────────────────────────────────┤
+│  ┌─────────────────────────────────┐│
+│  │         Tool Executor          ││
+│  └─────────────────────────────────┘│
+└─────────────────────────────────────┘
+```
+
+## Memory Types
+
+### Working Memory
+Temporary context for the current conversation.
+
+### Persistent Memory
+Long-term storage across sessions.
+
+### Shared Memory
+Memory shared between multiple agents.
+
+## Tools
+
+Define custom tools for your agents:
+
+```tsx
+const calculatorTool: Tool = {
+  name: "calculator",
+  description: "Perform mathematical calculations",
+  parameters: {
+    expression: {
+      type: "string",
+      description: "Mathematical expression to evaluate",
+    },
+  },
+  execute: async ({ expression }) => {
+    return eval(expression); // Use a safe math library in production
+  },
+};
+```
+
+## Multi-Agent Systems
+
+Create teams of agents that work together:
+
+```tsx
+import { AgentTeam } from "@open-source-ai/ai";
+
+const team = new AgentTeam({
+  agents: [
+    { name: "researcher", role: "Find information" },
+    { name: "writer", role: "Write content" },
+    { name: "reviewer", role: "Review and edit" },
+  ],
+});
+
+const result = await team.run("Write a blog post about open-source AI");
+```

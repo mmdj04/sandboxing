@@ -1,0 +1,67 @@
+---
+title: Installation
+description: How to install and set up the Open-Source Agentic Infrastructure.
+order: 2
+---
+
+# Installation
+
+Get up and running in minutes.
+
+## Prerequisites
+
+- Node.js 18+ 
+- npm, yarn, or pnpm
+
+## Quick Install
+
+```bash
+npx open-source-ai infra init my-project
+```
+
+## Manual Install
+
+```bash
+# Create a new project
+mkdir my-project && cd my-project
+
+# Initialize package.json
+npm init -y
+
+# Install dependencies
+npm install @open-source-ai/core @open-source-ai/components @open-source-ai/ai
+```
+
+## Configuration
+
+Create an `open-source.config.js` file in your project root:
+
+```js
+module.exports = {
+  name: "My Project",
+  components: {
+    ui: true,
+    ai: true,
+    docs: true,
+  },
+  theme: {
+    dark: true,
+    accentColor: "#3b82f6",
+  },
+};
+```
+
+## What's Included
+
+| Package | Description |
+|---------|-------------|
+| `@open-source-ai/core` | Core infrastructure and utilities |
+| `@open-source-ai/components` | UI component library |
+| `@open-source-ai/ai` | AI agent tools and utilities |
+| `@open-source-ai/docs` | Documentation framework |
+
+## Next Steps
+
+- [Documentation →](/docs/documentation)
+- [Components →](/docs/components)
+- [AI Agents →](/docs/ai-agents)

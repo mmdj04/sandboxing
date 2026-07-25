@@ -34,6 +34,7 @@
     "date-fns": "^4.4.0",
     "embla-carousel-react": "^8.6.0",
     "flags": "^4.2.3",
+    "gray-matter": "^4.0.3",
     "input-otp": "^1.4.2",
     "lucide-react": "^1.27.0",
     "media-chrome": "^4.19.2",
@@ -48,6 +49,10 @@
     "react-jsx-parser": "^2.4.1",
     "react-resizable-panels": "^4.12.2",
     "recharts": "^3.10.1",
+    "rehype-highlight": "^7.0.2",
+    "rehype-slug": "^6.0.0",
+    "remark": "^15.0.1",
+    "remark-mdx": "^3.1.1",
     "shadcn": "^4.15.0",
     "shiki": "^4.3.1",
     "sonner": "^2.0.7",
@@ -64,10 +69,10 @@
     "@types/node": "^26.1.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.2.12",
     "tailwindcss": "^4",
-    "@typescript/native": "npm:typescript@^7.0.2",
     "typescript": "npm:@typescript/typescript6@^6.0.2"
   }
 }

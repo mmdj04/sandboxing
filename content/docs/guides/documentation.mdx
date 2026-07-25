@@ -1,0 +1,97 @@
+---
+title: Documentation
+description: The best open-source documentation framework.
+order: 3
+---
+
+# Documentation
+
+Our documentation framework helps you create beautiful, searchable documentation that developers actually want to use.
+
+## Features
+
+- **MDX Support** — Write docs in Markdown with JSX
+- **Full-Text Search** — Instant search across all docs
+- **Versioning** — Multiple version support
+- **i18n** — Multi-language documentation
+- **Dark Mode** — Automatic theme switching
+
+## Quick Start
+
+```bash
+npx open-source-ai docs init
+```
+
+## Structure
+
+```
+docs/
+├── content/
+│   ├── getting-started/
+│   │   ├── introduction.mdx
+│   │   └── installation.mdx
+│   ├── components/
+│   │   └── index.mdx
+│   └── guides/
+│       └── ai-agents.mdx
+└── open-source.config.js
+```
+
+## Writing Docs
+
+Create MDX files with frontmatter:
+
+```mdx
+---
+title: My Page
+description: Page description
+order: 1
+---
+
+# My Page
+
+Content goes here with **Markdown** and JSX support.
+
+import { Callout } from "@open-source-ai/docs";
+
+<Callout type="info">
+  This is an informational callout.
+</Callout>
+```
+
+## Search
+
+Full-text search is built-in. Users can search across all documentation pages instantly.
+
+## Versioning
+
+```js
+// open-source.config.js
+module.exports = {
+  docs: {
+    versions: ["v1.0", "v2.0", "latest"],
+    defaultVersion: "latest",
+  },
+};
+```
+
+## Deployment
+
+Deploy your documentation anywhere:
+
+- **Vercel** — Zero-config deployment
+- **Netlify** — Automatic builds
+- **GitHub Pages** — Free hosting
+- **Self-Hosted** — Any static host
+
+## Customization
+
+Customize the look and feel:
+
+```css
+:root {
+  --docs-primary: #3b82f6;
+  --docs-sidebar-width: 280px;
+  --docs-content-max-width: 800px;
+}
+```
