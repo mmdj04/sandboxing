@@ -1,5 +1,5 @@
-const BORDER = "1px solid #aaa";
-const CARD_BG = "#0d0d0d";
+const BORDER = "1px solid hsl(0, 0%, 20%)";
+const CARD_BG = "hsl(0, 0%, 13%)";
 
 const rows = [
   {
@@ -44,7 +44,7 @@ const rows = [
 
 export default function Home() {
   return (
-    <div style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+    <div style={{ fontFamily: "Arial, Helvetica, sans-serif", background: "hsl(0, 0%, 9%)", minHeight: "100vh" }}>
       <div
         style={{
           display: "flex",
@@ -57,9 +57,9 @@ export default function Home() {
         <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "1rem" }}>
           Welcome to Sandboxing
         </h1>
-        <p style={{ fontSize: "1.125rem", color: "#666" }}>
+        <p style={{ fontSize: "1.125rem", color: "#999" }}>
           Get started by editing{" "}
-          <code style={{ background: "#f5f5f5", padding: "0.25rem 0.5rem", borderRadius: "4px" }}>
+          <code style={{ background: "hsl(0, 0%, 18%)", padding: "0.25rem 0.5rem", borderRadius: "4px", color: "#ccc" }}>
             src/app/page.tsx
           </code>
         </p>
