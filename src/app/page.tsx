@@ -1,4 +1,4 @@
-const BORDER_COLOR = "#888";
+const BORDER = "2px solid #aaa";
 const CARD_BG = "#0d0d0d";
 
 const rows = [
@@ -66,18 +66,32 @@ export default function Home() {
       </div>
 
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 2rem 4rem" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: BORDER_COLOR, border: `1px solid ${BORDER_COLOR}` }}>
-          {rows.map((row, rowIdx) => (
-            <div key={rowIdx} style={{ display: "grid", gridTemplateColumns: row.columns, gap: "1px" }}>
-              {row.cells.map((cell, cellIdx) => (
-                <div key={cellIdx} style={{ background: CARD_BG, padding: "2rem" }}>
-                  <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
-                  <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        {rows.map((row, rowIdx) => (
+          <div
+            key={rowIdx}
+            style={{
+              display: "grid",
+              gridTemplateColumns: row.columns,
+            }}
+          >
+            {row.cells.map((cell, cellIdx) => (
+              <div
+                key={cellIdx}
+                style={{
+                  background: CARD_BG,
+                  padding: "2rem",
+                  borderTop: BORDER,
+                  borderLeft: BORDER,
+                  ...(cellIdx === row.cells.length - 1 ? { borderRight: BORDER } : {}),
+                  ...(rowIdx === rows.length - 1 ? { borderBottom: BORDER } : {}),
+                }}
+              >
+                <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
+                <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
