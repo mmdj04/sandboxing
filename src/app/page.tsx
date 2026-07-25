@@ -3,7 +3,7 @@ import { Header } from "./components/Header";
 import "./bento.css";
 
 const BORDER = "1px solid hsl(0, 0%, 18%)";
-const CARD_BG = "hsl(0, 0%, 13%)";
+const CARD_BG = "hsl(0, 0%, 9%)";
 
 const rows = [
   {
