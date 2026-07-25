@@ -31,7 +31,7 @@ export function Header() {
             textDecoration: "none",
           }}
         >
-          Sandboxing
+          Open-Source Agentic Infrastructure
         </a>
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>

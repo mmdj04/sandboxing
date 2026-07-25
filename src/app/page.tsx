@@ -55,7 +55,7 @@ export default function Home() {
         }}
       >
         <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.5rem)", fontWeight: "bold", marginBottom: "1rem", color: "#fff" }}>
-          Welcome to Sandboxing
+          Welcome to Open-Source Agentic Infrastructure
         </h1>
         <p style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)", color: "#999" }}>
           Get started by editing{" "}

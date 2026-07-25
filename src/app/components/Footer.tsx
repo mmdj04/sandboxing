@@ -11,7 +11,7 @@ export function Footer() {
       }}
     >
       <span style={{ color: "#888", fontSize: "0.875rem" }}>
-        Copyright Sandboxing 2026. All rights reserved.
+        Copyright Open-Source Agentic Infrastructure 2026. All rights reserved.
       </span>
       <a
         href="https://github.com/mmdj04/sandboxing"
