@@ -87,18 +87,18 @@ export default async function DocPage({ params }: DocPageProps) {
 
       <Separator className="my-8" />
 
-      <div className="flex justify-between items-center">
-        {prevDoc ? (
-          <PaginationPrevious href={`/docs/${prevDoc.slug.join("/")}`} text={prevDoc.title} />
-        ) : (
-          <span />
-        )}
-        {nextDoc ? (
-          <PaginationNext href={`/docs/${nextDoc.slug.join("/")}`} text={nextDoc.title} />
-        ) : (
-          <span />
-        )}
-      </div>
+      <nav className="flex justify-between items-center gap-4">
+        <div className="flex-1">
+          {prevDoc ? (
+            <PaginationPrevious href={`/docs/${prevDoc.slug.join("/")}`} text={prevDoc.title} />
+          ) : null}
+        </div>
+        <div className="flex-1 text-right">
+          {nextDoc ? (
+            <PaginationNext href={`/docs/${nextDoc.slug.join("/")}`} text={nextDoc.title} />
+          ) : null}
+        </div>
+      </nav>
     </article>
   );
 }
