@@ -83,7 +83,6 @@ export default function Home() {
                   borderTop: BORDER,
                   borderLeft: BORDER,
                   ...(cellIdx === row.cells.length - 1 ? { borderRight: BORDER } : {}),
-                  ...(rowIdx === rows.length - 1 ? { borderBottom: BORDER } : {}),
                 }}
               >
                 <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
@@ -92,6 +91,35 @@ export default function Home() {
             ))}
           </div>
         ))}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            background: CARD_BG,
+            padding: "2rem",
+            borderTop: BORDER,
+            borderLeft: BORDER,
+            borderRight: BORDER,
+            borderBottom: BORDER,
+          }}
+        >
+          <h2 style={{ color: "#fff", fontSize: "1.5rem", fontWeight: 700 }}>Start building AI interfaces today</h2>
+          <button
+            style={{
+              background: "#fff",
+              color: "#000",
+              padding: "0.75rem 1.5rem",
+              borderRadius: "8px",
+              border: "none",
+              fontWeight: 600,
+              cursor: "pointer",
+              fontSize: "0.875rem",
+            }}
+          >
+            Get started
+          </button>
+        </div>
       </div>
     </div>
   );
