@@ -1,4 +1,4 @@
-const BORDER = "1px solid hsl(0, 0%, 20%)";
+const BORDER = "1px solid hsl(0, 0%, 18%)";
 const CARD_BG = "hsl(0, 0%, 13%)";
 
 const rows = [
@@ -65,7 +65,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 2rem 4rem" }}>
+      <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 2rem 4rem" }}>
         {rows.map((row, rowIdx) => (
           <div
             key={rowIdx}
