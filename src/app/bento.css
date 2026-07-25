@@ -32,7 +32,6 @@
 
 .first-row {
   grid-template-columns: 1fr 1fr 1fr;
-  border-top: 1px solid hsl(0, 0%, 25%);
   margin-bottom: 0;
 }
 
