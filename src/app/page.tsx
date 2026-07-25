@@ -46,13 +46,15 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "50vh",
+          minHeight: "40vh",
+          padding: "2rem 1rem",
+          textAlign: "center",
         }}
       >
-        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "1rem" }}>
+        <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.5rem)", fontWeight: "bold", marginBottom: "1rem" }}>
           Welcome to Sandboxing
         </h1>
-        <p style={{ fontSize: "1.125rem", color: "#999" }}>
+        <p style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)", color: "#999" }}>
           Get started by editing{" "}
           <code style={{ background: "hsl(0, 0%, 18%)", padding: "0.25rem 0.5rem", borderRadius: "4px", color: "#ccc" }}>
             src/app/page.tsx
@@ -60,7 +62,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 2rem 4rem" }}>
+      <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 1rem 4rem" }}>
         <div
           className="bento-grid bento-grid-3"
           style={{
