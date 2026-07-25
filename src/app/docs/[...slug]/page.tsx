@@ -5,14 +5,6 @@ import { getDocBySlug, getAllDocs } from "@/lib/docs";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
@@ -87,17 +79,29 @@ export default async function DocPage({ params }: DocPageProps) {
 
       <Separator className="my-8" />
 
-      <nav className="flex justify-between items-center gap-4">
-        <div className="flex-1">
-          {prevDoc ? (
-            <PaginationPrevious href={`/docs/${prevDoc.slug.join("/")}`} text={prevDoc.title} />
-          ) : null}
-        </div>
-        <div className="flex-1 text-right">
-          {nextDoc ? (
-            <PaginationNext href={`/docs/${nextDoc.slug.join("/")}`} text={nextDoc.title} />
-          ) : null}
-        </div>
+      <nav className="flex justify-between items-start gap-8">
+        {prevDoc ? (
+          <Link
+            href={`/docs/${prevDoc.slug.join("/")}`}
+            className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <span className="text-lg">←</span>
+            <span className="group-hover:underline">{prevDoc.title}</span>
+          </Link>
+        ) : (
+          <span />
+        )}
+        {nextDoc ? (
+          <Link
+            href={`/docs/${nextDoc.slug.join("/")}`}
+            className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors text-right"
+          >
+            <span className="group-hover:underline">{nextDoc.title}</span>
+            <span className="text-lg">→</span>
+          </Link>
+        ) : (
+          <span />
+        )}
       </nav>
     </article>
   );
