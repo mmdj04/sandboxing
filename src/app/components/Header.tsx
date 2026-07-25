@@ -14,8 +14,10 @@ export function Header() {
           alignItems: "center",
           padding: "1rem 2rem",
           borderBottom: "1px solid hsl(0, 0%, 25%)",
-          position: "sticky",
+          position: "fixed",
           top: 0,
+          left: 0,
+          right: 0,
           background: "hsl(0, 0%, 9%)",
           zIndex: 100,
         }}
