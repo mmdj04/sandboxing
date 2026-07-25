@@ -1,4 +1,4 @@
-const BORDER = "2px solid #aaa";
+const BORDER = "1px solid #aaa";
 const CARD_BG = "#0d0d0d";
 
 const rows = [
