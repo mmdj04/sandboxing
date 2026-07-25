@@ -42,9 +42,7 @@ export default function Home() {
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1fr",
             gap: "1px",
-            background: "#1a1a1a",
-            borderRadius: "16px",
-            overflow: "hidden",
+            background: "#333",
             marginBottom: "1px",
           }}
         >
@@ -80,7 +78,7 @@ export default function Home() {
             display: "grid",
             gridTemplateColumns: "2fr 1fr",
             gap: "1px",
-            background: "#1a1a1a",
+            background: "#333",
             marginBottom: "1px",
           }}
         >
@@ -108,7 +106,7 @@ export default function Home() {
             display: "grid",
             gridTemplateColumns: "1fr 2fr 1fr",
             gap: "1px",
-            background: "#1a1a1a",
+            background: "#333",
             marginBottom: "1px",
           }}
         >
@@ -144,7 +142,7 @@ export default function Home() {
             display: "grid",
             gridTemplateColumns: "1fr 2fr",
             gap: "1px",
-            background: "#1a1a1a",
+            background: "#333",
             marginBottom: "1px",
           }}
         >
@@ -172,9 +170,8 @@ export default function Home() {
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1fr",
             gap: "1px",
-            background: "#1a1a1a",
-            borderRadius: "0 0 16px 16px",
-            overflow: "hidden",
+            background: "#333",
+
           }}
         >
           <div style={{ background: "#0d0d0d", padding: "2rem" }}>
