@@ -36,86 +36,69 @@ export default function Home() {
           padding: "0 2rem 4rem",
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            gap: "1px",
-            background: "#333",
-          }}
-        >
-          {/* Row 1 - 3 columns */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1px", background: "#333" }}>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Fully Composable</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Every component is a building block. Combine small, focused pieces to create exactly the UI you need.</p>
-            </div>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>AI SDK Integration</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Deep integration with the AI SDK. Streaming, status states and type safety built-in.</p>
-            </div>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>shadcn/ui Foundation</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Built on shadcn/ui conventions. Your existing theme and setup apply automatically.</p>
-            </div>
+        {[
+          {
+            columns: "1fr 1fr 1fr",
+            cells: [
+              { title: "Fully Composable", desc: "Every component is a building block. Combine small, focused pieces to create exactly the UI you need." },
+              { title: "AI SDK Integration", desc: "Deep integration with the AI SDK. Streaming, status states and type safety built-in." },
+              { title: "shadcn/ui Foundation", desc: "Built on shadcn/ui conventions. Your existing theme and setup apply automatically." },
+            ],
+          },
+          {
+            columns: "2fr 1fr",
+            cells: [
+              { title: "Lightning Fast", desc: "Optimized for speed with instant completions, real-time collaboration, and sub-millisecond response times across your entire workflow." },
+              { title: "Enterprise Security", desc: "SOC 2 compliant with end-to-end encryption and role-based access control." },
+            ],
+          },
+          {
+            columns: "1fr 2fr 1fr",
+            cells: [
+              { title: "Global Edge", desc: "Deploy to 300+ edge locations worldwide with automatic CDN." },
+              { title: "AI-Powered Agent", desc: "Autonomous coding agent that understands your entire codebase. Writes, tests, and debugs code with human-level reasoning." },
+              { title: "Database", desc: "Built-in Postgres, Redis, and KV storage with automatic scaling." },
+            ],
+          },
+          {
+            columns: "1fr 2fr",
+            cells: [
+              { title: "Secrets", desc: "Encrypted environment variables with automatic rotation." },
+              { title: "Monorepo Ready", desc: "First-class monorepo support with Turborepo. Intelligent caching, parallel builds, and dependency graph optimization." },
+            ],
+          },
+          {
+            columns: "1fr 1fr 1fr",
+            cells: [
+              { title: "CLI & API", desc: "Full-featured CLI and REST API for complete programmatic control." },
+              { title: "Smart Previews", desc: "Every pull request gets an instant preview deployment with unique URL." },
+              { title: "Auto Deploy", desc: "Push to main and your app is live with automatic builds and rollback." },
+            ],
+          },
+        ].map((row, rowIdx) => (
+          <div
+            key={rowIdx}
+            style={{
+              display: "grid",
+              gridTemplateColumns: row.columns,
+              borderTop: "1px solid #333",
+            }}
+          >
+            {row.cells.map((cell, cellIdx) => (
+              <div
+                key={cellIdx}
+                style={{
+                  background: "#0d0d0d",
+                  padding: "2rem",
+                  borderLeft: cellIdx > 0 ? "1px solid #333" : undefined,
+                }}
+              >
+                <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
+                <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
+              </div>
+            ))}
           </div>
-
-          {/* Row 2 - 2 columns (wide + narrow) */}
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1px", background: "#333" }}>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Lightning Fast</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Optimized for speed with instant completions, real-time collaboration, and sub-millisecond response times across your entire workflow.</p>
-            </div>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Enterprise Security</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>SOC 2 compliant with end-to-end encryption and role-based access control.</p>
-            </div>
-          </div>
-
-          {/* Row 3 - 3 columns (narrow + wide + narrow) */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr 1fr", gap: "1px", background: "#333" }}>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Global Edge</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Deploy to 300+ edge locations worldwide with automatic CDN.</p>
-            </div>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>AI-Powered Agent</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Autonomous coding agent that understands your entire codebase. Writes, tests, and debugs code with human-level reasoning.</p>
-            </div>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Database</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Built-in Postgres, Redis, and KV storage with automatic scaling.</p>
-            </div>
-          </div>
-
-          {/* Row 4 - 2 columns (narrow + wide) */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "1px", background: "#333" }}>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Secrets</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Encrypted environment variables with automatic rotation.</p>
-            </div>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Monorepo Ready</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>First-class monorepo support with Turborepo. Intelligent caching, parallel builds, and dependency graph optimization.</p>
-            </div>
-          </div>
-
-          {/* Row 5 - 3 columns */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1px", background: "#333" }}>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>CLI & API</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Full-featured CLI and REST API for complete programmatic control.</p>
-            </div>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Smart Previews</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Every pull request gets an instant preview deployment with unique URL.</p>
-            </div>
-            <div style={{ background: "#0d0d0d", padding: "2rem" }}>
-              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Auto Deploy</h3>
-              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Push to main and your app is live with automatic builds and rollback.</p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
