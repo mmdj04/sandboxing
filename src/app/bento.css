@@ -89,4 +89,8 @@
   .mobile-menu-overlay {
     display: block !important;
   }
+
+  .header-title {
+    font-size: 0.75rem !important;
+  }
 }

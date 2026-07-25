@@ -12,7 +12,7 @@ export function Header() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "1rem 2rem",
+          padding: "0.75rem 1rem",
           borderBottom: "1px solid hsl(0, 0%, 25%)",
           position: "fixed",
           top: 0,
@@ -24,27 +24,31 @@ export function Header() {
       >
         <a
           href="/"
+          className="header-title"
           style={{
             color: "#fff",
-            fontSize: "1.25rem",
+            fontSize: "0.875rem",
             fontWeight: 700,
             textDecoration: "none",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
           }}
         >
           Open-Source Agentic Infrastructure
         </a>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
           <button
             style={{
               background: "#fff",
               color: "#000",
-              padding: "0.5rem 1rem",
+              padding: "0.4rem 0.75rem",
               borderRadius: "6px",
               border: "none",
               fontWeight: 600,
               cursor: "pointer",
-              fontSize: "0.875rem",
+              fontSize: "0.75rem",
             }}
           >
             Inscreva-se
@@ -58,12 +62,12 @@ export function Header() {
               background: "transparent",
               border: "1px solid hsl(0, 0%, 25%)",
               borderRadius: "6px",
-              padding: "0.5rem",
+              padding: "0.4rem",
               cursor: "pointer",
               color: "#fff",
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M3 12h18M3 6h18M3 18h18" />
             </svg>
           </button>

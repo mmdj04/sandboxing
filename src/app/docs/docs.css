@@ -2,6 +2,7 @@
   display: flex;
   min-height: 100vh;
   background: hsl(0, 0%, 9%);
+  overflow-x: hidden;
 }
 
 .docs-sidebar {
@@ -100,18 +101,24 @@
 .docs-main {
   flex: 1;
   margin-left: 280px;
+  overflow-x: hidden;
 }
 
 .docs-content {
   max-width: 800px;
   margin: 0 auto;
   padding: 3rem 2rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .docs-article {
   max-width: 800px;
   margin: 0 auto;
   padding: 3rem 2rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 0;
 }
 
 .docs-breadcrumb {
@@ -201,6 +208,7 @@
   padding: 1.5rem;
   overflow-x: auto;
   margin-bottom: 1.5rem;
+  max-width: 100%;
 }
 
 .docs-article pre code {
@@ -214,6 +222,8 @@
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1.5rem;
+  display: block;
+  overflow-x: auto;
 }
 
 .docs-article th,
