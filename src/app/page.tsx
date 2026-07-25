@@ -81,7 +81,8 @@ export default function Home() {
             style={{
               display: "grid",
               gridTemplateColumns: row.columns,
-              borderTop: "1px solid #888",
+              borderTop: rowIdx === 0 ? "1px solid #888" : undefined,
+              borderBottom: rowIdx === 4 ? "1px solid #888" : undefined,
             }}
           >
             {row.cells.map((cell, cellIdx) => (
@@ -91,6 +92,8 @@ export default function Home() {
                   background: "#0d0d0d",
                   padding: "2rem",
                   borderLeft: cellIdx > 0 ? "1px solid #888" : undefined,
+                  borderRight: cellIdx === row.cells.length - 1 ? "1px solid #888" : undefined,
+                  borderTop: rowIdx > 0 ? "1px solid #888" : undefined,
                 }}
               >
                 <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
