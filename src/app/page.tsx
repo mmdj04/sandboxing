@@ -1,4 +1,5 @@
 import { CodeBlock } from "./components/CodeBlock";
+import "./bento.css";
 
 const BORDER = "1px solid hsl(0, 0%, 18%)";
 const CARD_BG = "hsl(0, 0%, 13%)";
@@ -61,9 +62,8 @@ export default function Home() {
 
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 2rem 4rem" }}>
         <div
+          className="bento-grid bento-grid-3"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
             gap: "2rem",
             background: CARD_BG,
             padding: "2rem",
@@ -88,9 +88,9 @@ export default function Home() {
         {rows.map((row, rowIdx) => (
           <div
             key={rowIdx}
+            className={`bento-grid bento-grid-${row.columns === "1fr 1fr 1fr" ? "3" : row.columns === "2fr 1fr" ? "2" : row.columns === "1fr 2fr 1fr" ? "2-1" : "1-2"}`}
             style={{
               display: "grid",
-              gridTemplateColumns: row.columns,
             }}
           >
               {row.cells.map((cell, cellIdx) => (

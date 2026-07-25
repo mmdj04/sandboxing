@@ -1,0 +1,29 @@
+.bento-grid {
+  display: grid;
+  gap: 1px;
+}
+
+.bento-grid-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.bento-grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.bento-grid-2-1 {
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.bento-grid-1-2 {
+  grid-template-columns: 1fr 2fr;
+}
+
+@media (max-width: 768px) {
+  .bento-grid-3,
+  .bento-grid-2,
+  .bento-grid-2-1,
+  .bento-grid-1-2 {
+    grid-template-columns: 1fr;
+  }
+}
