@@ -27,6 +27,10 @@
     grid-template-columns: 1fr;
   }
 
+  .first-row {
+    grid-template-columns: 1fr !important;
+  }
+
   .menu-btn {
     display: block !important;
   }

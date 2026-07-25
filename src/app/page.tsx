@@ -65,28 +65,34 @@ export default function Home() {
 
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 1rem 4rem" }}>
         <div
-          className="bento-grid bento-grid-3"
+          className="first-row"
           style={{
-            gap: "2rem",
-            background: CARD_BG,
-            padding: "2rem",
-            borderTop: BORDER,
-            borderLeft: BORDER,
-            borderRight: BORDER,
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            borderBottom: BORDER,
+            marginLeft: "-1px",
+            marginRight: "-1px",
           }}
         >
-          <div>
-            <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>Fully Composable</h3>
-            <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Every component is a building block. Combine small, focused pieces to create exactly the UI you need.</p>
-          </div>
-          <div>
-            <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>AI SDK Integration</h3>
-            <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Deep integration with the AI SDK. Streaming, status states and type safety built-in.</p>
-          </div>
-          <div>
-            <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>shadcn/ui Foundation</h3>
-            <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>Built on shadcn/ui conventions. Your existing theme and setup apply automatically.</p>
-          </div>
+          {[
+            { title: "Fully Composable", desc: "Every component is a building block. Combine small, focused pieces to create exactly the UI you need." },
+            { title: "AI SDK Integration", desc: "Deep integration with the AI SDK. Streaming, status states and type safety built-in." },
+            { title: "shadcn/ui Foundation", desc: "Built on shadcn/ui conventions. Your existing theme and setup apply automatically." },
+          ].map((item, i) => (
+            <div
+              key={i}
+              style={{
+                background: CARD_BG,
+                padding: "2rem",
+                borderTop: BORDER,
+                borderLeft: BORDER,
+                borderRight: BORDER,
+              }}
+            >
+              <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{item.title}</h3>
+              <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{item.desc}</p>
+            </div>
+          ))}
         </div>
         {rows.map((row, rowIdx) => (
           <div
@@ -94,6 +100,7 @@ export default function Home() {
             className={`bento-grid bento-grid-${row.columns === "1fr 1fr 1fr" ? "3" : row.columns === "2fr 1fr" ? "2" : row.columns === "1fr 2fr 1fr" ? "2-1" : "1-2"}`}
             style={{
               display: "grid",
+              marginTop: "-1px",
             }}
           >
               {row.cells.map((cell, cellIdx) => (
@@ -104,7 +111,8 @@ export default function Home() {
                     padding: "2rem",
                     borderTop: BORDER,
                     borderLeft: BORDER,
-                    ...(cellIdx === row.cells.length - 1 ? { borderRight: BORDER } : {}),
+                    borderRight: BORDER,
+                    borderBottom: BORDER,
                   }}
                 >
                   {cell.type === "code" ? (
