@@ -68,8 +68,6 @@ export default function Home() {
             borderTop: BORDER,
             borderLeft: BORDER,
             borderRight: BORDER,
-            borderBottom: BORDER,
-            marginBottom: "1px",
           }}
         >
           <div>
