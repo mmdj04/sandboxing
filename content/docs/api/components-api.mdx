@@ -1,0 +1,171 @@
+---
+title: Components API
+description: API reference for UI components.
+order: 2
+---
+
+# Components API
+
+Complete API reference for all UI components.
+
+## Button
+
+A versatile button component.
+
+```tsx
+import { Button } from "@open-source-ai/components";
+
+<Button variant="primary" size="md" onClick={handleClick}>
+  Click me
+</Button>
+```
+
+### Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"primary" \| "secondary" \| "ghost" \| "danger"` | `"primary"` | Button style |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Button size |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `loading` | `boolean` | `false` | Loading state |
+| `onClick` | `() => void` | - | Click handler |
+
+---
+
+## Input
+
+A text input component with validation.
+
+```tsx
+import { Input } from "@open-source-ai/components";
+
+<Input
+  placeholder="Enter your email"
+  type="email"
+  value={email}
+  onChange={setEmail}
+  error={errors.email}
+/>
+```
+
+### Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `type` | `string` | `"text"` | Input type |
+| `placeholder` | `string` | - | Placeholder text |
+| `value` | `string` | - | Input value |
+| `onChange` | `(value: string) => void` | - | Change handler |
+| `error` | `string` | - | Error message |
+| `disabled` | `boolean` | `false` | Disabled state |
+
+---
+
+## Card
+
+A content card component.
+
+```tsx
+import { Card, CardHeader, CardContent, CardFooter } from "@open-source-ai/components";
+
+<Card>
+  <CardHeader>
+    <h3>Card Title</h3>
+  </CardHeader>
+  <CardContent>
+    <p>Card content goes here.</p>
+  </CardContent>
+  <CardFooter>
+    <Button>Action</Button>
+  </CardFooter>
+</Card>
+```
+
+### Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Card content |
+| `className` | `string` | - | Additional CSS classes |
+| `padding` | `boolean` | `true` | Internal padding |
+
+---
+
+## Modal
+
+A dialog modal component.
+
+```tsx
+import { Modal, ModalTrigger, ModalContent } from "@open-source-ai/components";
+
+<Modal>
+  <ModalTrigger>
+    <Button>Open Modal</Button>
+  </ModalTrigger>
+  <ModalContent>
+    <h2>Modal Title</h2>
+    <p>Modal content goes here.</p>
+  </ModalContent>
+</Modal>
+```
+
+### Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | `boolean` | - | Controlled open state |
+| `onOpenChange` | `(open: boolean) => void` | - | Open state handler |
+| `children` | `ReactNode` | - | Modal content |
+
+---
+
+## Tabs
+
+A tab navigation component.
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@open-source-ai/components";
+
+<Tabs defaultValue="tab1">
+  <TabsList>
+    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">Content 1</TabsContent>
+  <TabsContent value="tab2">Content 2</TabsContent>
+</Tabs>
+```
+
+### Props
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `defaultValue` | `string` | - | Initial active tab |
+| `value` | `string` | - | Controlled active tab |
+| `onChange` | `(value: string) => void` | - | Tab change handler |
+
+---
+
+## Toast
+
+A notification toast component.
+
+```tsx
+import { toast } from "@open-source-ai/components";
+
+// Simple toast
+toast("Hello world!");
+
+// With options
+toast.success("Success!");
+toast.error("Error occurred!");
+toast.warning("Warning!");
+toast.info("Information!");
+```
+
+### Options
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `duration` | `number` | `3000` | Duration in ms |
+| `position` | `"top" \| "bottom" \| "top-right" \| "bottom-right"` | `"bottom-right"` | Toast position |

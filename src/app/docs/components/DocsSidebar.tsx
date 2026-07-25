@@ -4,11 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface Section {
-  title: string;
-  items: { title: string; href: string }[];
-}
-
 interface DocsSidebarProps {
   sections: Record<string, { title: string; slug: string[] }[]>;
 }
@@ -22,21 +17,35 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
     "getting-started": "Getting Started",
     components: "Core",
     guides: "Guides",
+    api: "API Reference",
+    examples: "Examples",
   };
 
   return (
     <>
       <button
-        className="docs-mobile-toggle"
-        onClick={() => setMobileOpen(!mobileOpen)}
+        className={`docs-mobile-toggle ${mobileOpen ? "hidden" : ""}`}
+        onClick={() => setMobileOpen(true)}
       >
-        {mobileOpen ? "Close" : "Menu"}
+        Menu
       </button>
+      <div
+        className={`docs-overlay ${mobileOpen ? "open" : ""}`}
+        onClick={() => setMobileOpen(false)}
+      />
       <aside className={`docs-sidebar ${mobileOpen ? "open" : ""}`}>
         <div className="docs-sidebar-header">
           <Link href="/" className="docs-logo">
             Open-Source AI
           </Link>
+          <button
+            className="docs-sidebar-close"
+            onClick={() => setMobileOpen(false)}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
         <div className="docs-search">

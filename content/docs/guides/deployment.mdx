@@ -1,0 +1,174 @@
+---
+title: Deployment
+description: Deploy your application to production.
+order: 5
+---
+
+# Deployment
+
+Deploy your Open-Source AI application to production.
+
+## Vercel (Recommended)
+
+The easiest way to deploy Next.js applications.
+
+### Automatic Deployment
+
+1. Push your code to GitHub
+2. Import your repository on [vercel.com](https://vercel.com)
+3. Vercel automatically detects Next.js and configures the build
+4. Your app is deployed!
+
+### Manual Deployment
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Login
+vercel login
+
+# Deploy
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+## Netlify
+
+```bash
+# Install Netlify CLI
+npm i -g netlify-cli
+
+# Login
+netlify login
+
+# Build
+npm run build
+
+# Deploy
+netlify deploy --dir=.next
+```
+
+## Docker
+
+### Dockerfile
+
+```dockerfile
+FROM node:18-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV production
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+USER nextjs
+EXPOSE 3000
+ENV PORT 3000
+CMD ["node", "server.js"]
+```
+
+### Docker Compose
+
+```yaml
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+```
+
+```bash
+# Build and run
+docker-compose up -d
+```
+
+## AWS
+
+### AWS Amplify
+
+1. Connect your GitHub repository
+2. Configure build settings:
+   - Build command: `npm run build`
+   - Output directory: `.next`
+3. Deploy
+
+### AWS ECS
+
+```bash
+# Build image
+docker build -t my-app .
+
+# Tag for ECR
+docker tag my-app:latest 123456789.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
+
+# Push to ECR
+docker push 123456789.dkr.ecr.us-east-1.amazonaws.com/my-app:latest
+```
+
+## Environment Variables
+
+### Vercel
+
+Add environment variables in the Vercel dashboard or:
+
+```bash
+vercel env add DATABASE_URL
+```
+
+### Docker
+
+```bash
+docker run -e DATABASE_URL="postgresql://..." my-app
+```
+
+### Local `.env`
+
+```bash
+# .env.local
+DATABASE_URL=postgresql://localhost:5432/mydb
+API_KEY=your-api-key
+```
+
+## Custom Domain
+
+### Vercel
+
+1. Go to Project Settings → Domains
+2. Add your domain
+3. Configure DNS records
+
+### Cloudflare
+
+1. Add CNAME record pointing to your deployment
+2. Enable proxy for SSL
+
+## Performance Tips
+
+- Use `next/image` for optimized images
+- Enable static generation where possible
+- Use ISR for dynamic content
+- Configure proper caching headers
+- Use edge functions for server-side logic

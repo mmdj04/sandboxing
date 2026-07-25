@@ -1,0 +1,145 @@
+---
+title: Core API
+description: Core API reference for Open-Source Agentic Infrastructure.
+order: 1
+---
+
+# Core API
+
+Complete API reference for the core package.
+
+## Installation
+
+```bash
+npm install @open-source-ai/core
+```
+
+## Functions
+
+### createApp()
+
+Creates a new application instance.
+
+```typescript
+import { createApp } from "@open-source-ai/core";
+
+const app = createApp({
+  name: "My App",
+  version: "1.0.0",
+});
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `name` | `string` | Application name |
+| `version` | `string` | Application version |
+
+**Returns:** `App` — The application instance
+
+---
+
+### configure()
+
+Configures the application settings.
+
+```typescript
+import { configure } from "@open-source-ai/core";
+
+configure({
+  theme: "dark",
+  language: "en",
+  plugins: [],
+});
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `theme` | `"light" \| "dark" \| "system"` | UI theme |
+| `language` | `string` | Language code |
+| `plugins` | `Plugin[]` | Array of plugins |
+
+---
+
+### useApp()
+
+React hook to access the application context.
+
+```typescript
+import { useApp } from "@open-source-ai/core";
+
+function MyComponent() {
+  const { theme, setTheme } = useApp();
+  return <div>Current theme: {theme}</div>;
+}
+```
+
+**Returns:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `theme` | `string` | Current theme |
+| `setTheme` | `(theme: string) => void` | Theme setter |
+| `language` | `string` | Current language |
+| `setLanguage` | `(lang: string) => void` | Language setter |
+
+---
+
+## Types
+
+### App
+
+```typescript
+interface App {
+  name: string;
+  version: string;
+  config: AppConfig;
+}
+```
+
+### AppConfig
+
+```typescript
+interface AppConfig {
+  theme: "light" | "dark" | "system";
+  language: string;
+  plugins: Plugin[];
+}
+```
+
+### Plugin
+
+```typescript
+interface Plugin {
+  name: string;
+  version: string;
+  install: (app: App) => void;
+}
+```
+
+---
+
+## Events
+
+### app:ready
+
+Fired when the application is fully initialized.
+
+```typescript
+app.on("app:ready", () => {
+  console.log("App is ready!");
+});
+```
+
+### app:error
+
+Fired when an error occurs.
+
+```typescript
+app.on("app:error", (error) => {
+  console.error("App error:", error);
+});
+```

@@ -1,0 +1,193 @@
+---
+title: AI Agent Examples
+description: Real-world examples of building AI agents.
+order: 1
+---
+
+# AI Agent Examples
+
+Learn by example with real-world AI agent implementations.
+
+## Simple Chat Agent
+
+A basic chat agent with memory.
+
+```typescript
+import { Agent, Memory } from "@open-source-ai/ai";
+
+const memory = new Memory();
+
+const agent = new Agent({
+  model: "gpt-4",
+  systemPrompt: "You are a helpful assistant.",
+  memory,
+});
+
+// First message
+const response1 = await agent.run("My name is Alice.");
+console.log(response1);
+// → "Hello Alice! How can I help you today?"
+
+// Agent remembers the name
+const response2 = await agent.run("What's my name?");
+console.log(response2);
+// → "Your name is Alice!"
+```
+
+---
+
+## Tool-Using Agent
+
+An agent that can use external tools.
+
+```typescript
+import { Agent, Tool } from "@open-source-ai/ai";
+
+const weatherTool: Tool = {
+  name: "get_weather",
+  description: "Get weather for a location",
+  parameters: {
+    location: {
+      type: "string",
+      description: "City name",
+    },
+  },
+  execute: async ({ location }) => {
+    // In real app, call weather API
+    return {
+      temperature: 22,
+      condition: "sunny",
+      humidity: 45,
+    };
+  },
+};
+
+const agent = new Agent({
+  model: "gpt-4",
+  tools: [weatherTool],
+  systemPrompt: "You are a weather assistant.",
+});
+
+const response = await agent.run("What's the weather in Paris?");
+console.log(response);
+// → "The weather in Paris is currently sunny with a temperature of 22°C..."
+```
+
+---
+
+## Multi-Step Agent
+
+An agent that completes complex tasks step by step.
+
+```typescript
+import { Agent, Step } from "@open-source-ai/ai";
+
+const agent = new Agent({
+  model: "gpt-4",
+  systemPrompt: "You are a research assistant.",
+  steps: [
+    Step.think("Analyze the user's request"),
+    Step.act("Search for relevant information"),
+    Step.observe("Review the search results"),
+    Step.respond("Provide a comprehensive answer"),
+  ],
+});
+
+const response = await agent.run(
+  "Research the benefits of open-source software"
+);
+```
+
+---
+
+## Agent Team
+
+Multiple agents working together.
+
+```typescript
+import { AgentTeam } from "@open-source-ai/ai";
+
+const team = new AgentTeam({
+  agents: [
+    {
+      name: "researcher",
+      role: "Researcher",
+      systemPrompt: "You find and analyze information.",
+    },
+    {
+      name: "writer",
+      role: "Writer",
+      systemPrompt: "You write clear, engaging content.",
+    },
+    {
+      name: "editor",
+      role: "Editor",
+      systemPrompt: "You review and improve content.",
+    },
+  ],
+  workflow: "sequential", // Run agents in order
+});
+
+const result = await team.run(
+  "Write a blog post about the future of AI"
+);
+
+console.log(result);
+// → Final blog post after research, writing, and editing
+```
+
+---
+
+## Streaming Responses
+
+Stream agent responses in real-time.
+
+```typescript
+import { Agent } from "@open-source-ai/ai";
+
+const agent = new Agent({
+  model: "gpt-4",
+  systemPrompt: "You are a helpful assistant.",
+});
+
+const stream = await agent.stream("Tell me a story");
+
+for await (const chunk of stream) {
+  process.stdout.write(chunk);
+}
+```
+
+---
+
+## Custom Tools
+
+Create reusable tool libraries.
+
+```typescript
+import { ToolLibrary } from "@open-source-ai/ai";
+
+const webTools = new ToolLibrary({
+  name: "web",
+  tools: [
+    {
+      name: "search",
+      description: "Search the web",
+      execute: async (query) => {
+        // Web search implementation
+      },
+    },
+    {
+      name: "fetch",
+      description: "Fetch a URL",
+      execute: async (url) => {
+        // URL fetch implementation
+      },
+    },
+  ],
+});
+
+const agent = new Agent({
+  model: "gpt-4",
+  tools: webTools,
+});
+```

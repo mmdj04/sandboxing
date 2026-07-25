@@ -1,0 +1,130 @@
+---
+title: Theming
+description: Customize the look and feel of your application.
+order: 4
+---
+
+# Theming
+
+Customize every aspect of the UI to match your brand.
+
+## CSS Variables
+
+All components use CSS variables for theming:
+
+```css
+:root {
+  /* Colors */
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --bg-tertiary: #e5e7eb;
+
+  /* Text */
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+
+  /* Borders */
+  --border-color: #e5e7eb;
+  --border-radius: 0.5rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+```
+
+## Dark Mode
+
+Dark mode is built-in. Just set the theme:
+
+```tsx
+import { useApp } from "@open-source-ai/core";
+
+function App() {
+  const { theme, setTheme } = useApp();
+
+  return (
+    <div>
+      <p>Current theme: {theme}</p>
+      <button onClick={() => setTheme("dark")}>Dark</button>
+      <button onClick={() => setTheme("light")}>Light</button>
+      <button onClick={() => setTheme("system")}>System</button>
+    </div>
+  );
+}
+```
+
+## Custom Themes
+
+Create your own theme:
+
+```css
+/* my-theme.css */
+[data-theme="ocean"] {
+  --color-primary: #0ea5e9;
+  --color-secondary: #06b6d4;
+  --bg-primary: #0c4a6e;
+  --bg-secondary: #075985;
+  --text-primary: #f0f9ff;
+}
+```
+
+```tsx
+import { configure } from "@open-source-ai/core";
+import "./my-theme.css";
+
+configure({
+  themes: ["light", "dark", "ocean"],
+  defaultTheme: "ocean",
+});
+```
+
+## Theme Provider
+
+Wrap your app with the theme provider:
+
+```tsx
+import { ThemeProvider } from "@open-source-ai/components";
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="dark" attribute="class">
+      <MyApp />
+    </ThemeProvider>
+  );
+}
+```
+
+## Component-Level Theming
+
+Override styles for specific components:
+
+```tsx
+<Button
+  className="my-custom-button"
+  style={{
+    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  }}
+>
+  Gradient Button
+</Button>
+```
+
+```css
+.my-custom-button {
+  border: none;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 9999px;
+}
+```
