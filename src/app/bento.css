@@ -1,6 +1,7 @@
-.bento-grid {
+.bento-row {
   display: grid;
-  gap: 1px;
+  border-left: 1px solid hsl(0, 0%, 18%);
+  border-right: 1px solid hsl(0, 0%, 18%);
 }
 
 .bento-grid-3 {
@@ -19,6 +20,45 @@
   grid-template-columns: 1fr 2fr;
 }
 
+.bento-cell {
+  background: hsl(0, 0%, 9%);
+  padding: 2rem;
+  border-top: 1px solid hsl(0, 0%, 18%);
+}
+
+.bento-cell + .bento-cell {
+  border-left: 1px solid hsl(0, 0%, 18%);
+}
+
+.first-row {
+  border-top: 1px solid hsl(0, 0%, 18%);
+  margin-bottom: 0;
+}
+
+.first-row + .bento-row {
+  margin-top: 0;
+}
+
+.bento-row + .bento-row {
+  margin-top: 0;
+}
+
+.bento-row + .bento-row .bento-cell {
+  border-top: 1px solid hsl(0, 0%, 18%);
+}
+
+.bento-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: hsl(0, 0%, 9%);
+  padding: 2rem;
+  border-top: 1px solid hsl(0, 0%, 18%);
+  border-left: 1px solid hsl(0, 0%, 18%);
+  border-right: 1px solid hsl(0, 0%, 18%);
+  border-bottom: 1px solid hsl(0, 0%, 18%);
+}
+
 @media (max-width: 768px) {
   .bento-grid-3,
   .bento-grid-2,
@@ -28,7 +68,18 @@
   }
 
   .first-row {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
+  }
+
+  .bento-cell + .bento-cell {
+    border-left: none;
+    border-top: 1px solid hsl(0, 0%, 18%);
+  }
+
+  .bento-cta {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
   }
 
   .menu-btn {

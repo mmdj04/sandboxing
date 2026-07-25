@@ -64,31 +64,13 @@ export default function Home() {
       </div>
 
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 1rem 4rem" }}>
-        <div
-          className="first-row"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            borderBottom: BORDER,
-            marginLeft: "-1px",
-            marginRight: "-1px",
-          }}
-        >
+        <div className="bento-row first-row">
           {[
             { title: "Fully Composable", desc: "Every component is a building block. Combine small, focused pieces to create exactly the UI you need." },
             { title: "AI SDK Integration", desc: "Deep integration with the AI SDK. Streaming, status states and type safety built-in." },
             { title: "shadcn/ui Foundation", desc: "Built on shadcn/ui conventions. Your existing theme and setup apply automatically." },
           ].map((item, i) => (
-            <div
-              key={i}
-              style={{
-                background: CARD_BG,
-                padding: "2rem",
-                borderTop: BORDER,
-                borderLeft: BORDER,
-                borderRight: BORDER,
-              }}
-            >
+            <div key={i} className="bento-cell">
               <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{item.title}</h3>
               <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{item.desc}</p>
             </div>
@@ -97,49 +79,23 @@ export default function Home() {
         {rows.map((row, rowIdx) => (
           <div
             key={rowIdx}
-            className={`bento-grid bento-grid-${row.columns === "1fr 1fr 1fr" ? "3" : row.columns === "2fr 1fr" ? "2" : row.columns === "1fr 2fr 1fr" ? "2-1" : "1-2"}`}
-            style={{
-              display: "grid",
-              marginTop: "-1px",
-            }}
+            className={`bento-row bento-grid-${row.columns === "1fr 1fr 1fr" ? "3" : row.columns === "2fr 1fr" ? "2" : row.columns === "1fr 2fr 1fr" ? "2-1" : "1-2"}`}
           >
-              {row.cells.map((cell, cellIdx) => (
-                <div
-                  key={cellIdx}
-                  style={{
-                    background: CARD_BG,
-                    padding: "2rem",
-                    borderTop: BORDER,
-                    borderLeft: BORDER,
-                    borderRight: BORDER,
-                    borderBottom: BORDER,
-                  }}
-                >
-                  {cell.type === "code" ? (
-                    <CodeBlock>{cell.code}</CodeBlock>
-                  ) : (
-                    <>
-                      <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
-                      <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
-                    </>
-                  )}
-                </div>
-              ))}
+            {row.cells.map((cell, cellIdx) => (
+              <div key={cellIdx} className="bento-cell">
+                {cell.type === "code" ? (
+                  <CodeBlock>{cell.code}</CodeBlock>
+                ) : (
+                  <>
+                    <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
+                    <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
+                  </>
+                )}
+              </div>
+            ))}
           </div>
         ))}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            background: CARD_BG,
-            padding: "2rem",
-            borderTop: BORDER,
-            borderLeft: BORDER,
-            borderRight: BORDER,
-            borderBottom: BORDER,
-          }}
-        >
+        <div className="bento-cta">
           <h2 style={{ color: "#fff", fontSize: "1.5rem", fontWeight: 700 }}>Start building AI interfaces today</h2>
           <button
             style={{
