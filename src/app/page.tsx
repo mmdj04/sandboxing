@@ -81,7 +81,7 @@ export default function Home() {
             style={{
               display: "grid",
               gridTemplateColumns: row.columns,
-              borderTop: "1px solid #333",
+              borderTop: "1px solid #555",
             }}
           >
             {row.cells.map((cell, cellIdx) => (
@@ -90,7 +90,7 @@ export default function Home() {
                 style={{
                   background: "#0d0d0d",
                   padding: "2rem",
-                  borderLeft: cellIdx > 0 ? "1px solid #333" : undefined,
+                  borderLeft: cellIdx > 0 ? "1px solid #555" : undefined,
                 }}
               >
                 <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
