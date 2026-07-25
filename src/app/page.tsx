@@ -1,4 +1,5 @@
 import { CodeBlock } from "./components/CodeBlock";
+import { Header } from "./components/Header";
 import "./bento.css";
 
 const BORDER = "1px solid hsl(0, 0%, 18%)";
@@ -40,6 +41,7 @@ const rows = [
 export default function Home() {
   return (
     <div style={{ fontFamily: "Arial, Helvetica, sans-serif", background: "hsl(0, 0%, 9%)", minHeight: "100vh" }}>
+      <Header />
       <div
         style={{
           display: "flex",

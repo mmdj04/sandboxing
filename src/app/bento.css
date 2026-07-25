@@ -26,4 +26,12 @@
   .bento-grid-1-2 {
     grid-template-columns: 1fr;
   }
+
+  .menu-btn {
+    display: block !important;
+  }
+
+  .mobile-menu {
+    display: block !important;
+  }
 }
