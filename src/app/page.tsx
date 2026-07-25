@@ -10,31 +10,31 @@ const rows = [
   {
     columns: "1fr 1fr",
     cells: [
-      { title: "Fast, Flexible Installation", desc: "Install only what you need. The CLI adds components directly to your codebase with full source code access. No hidden dependencies, tree-shaking friendly." },
-      { type: "code", code: "$ npx ai-elements@latest add conversation\n✔ Checking registry.\n✔ Installing dependencies.\n✔ Created 1 file:\n  - components/ai-elements/conversation.tsx\nℹ Skipped 1 files: (files might be identical, use --overwrite to overwrite)\n  - components/ui/button.tsx" },
+      { title: "The Best Open-Source Documentation", desc: "World-class documentation built by the community, for the community. Every guide, tutorial, and reference crafted to be clear, complete, and always up to date." },
+      { type: "code", code: "$ npx open-source-ai infra init\n✔ Setting up project.\n✔ Installing components.\n✔ Created 3 files:\n  - components/ui/button.tsx\n  - components/ai/chat.tsx\n  - docs/getting-started.md\n✔ Ready to build!" },
     ],
   },
   {
     columns: "1fr 2fr 1fr",
     cells: [
-      { title: "Global Edge", desc: "Deploy to 300+ edge locations worldwide with automatic CDN." },
-      { title: "AI-Powered Agent", desc: "Autonomous coding agent that understands your entire codebase. Writes, tests, and debugs code with human-level reasoning." },
-      { title: "Database", desc: "Built-in Postgres, Redis, and KV storage with automatic scaling." },
+      { title: "Universal Components", desc: "Every UI component you need, open-source and free. Buttons, forms, modals, navigation, and more — all production-ready." },
+      { title: "AI-Native by Default", desc: "Built from the ground up for AI agents. Streaming, tool use, memory, and reasoning capabilities baked into every layer of the stack." },
+      { title: "Fully Composable", desc: "Mix and match components like Lego blocks. Every piece works together seamlessly, so you can build exactly what you envision." },
     ],
   },
   {
     columns: "1fr 2fr",
     cells: [
-      { title: "Secrets", desc: "Encrypted environment variables with automatic rotation." },
-      { title: "Monorepo Ready", desc: "First-class monorepo support with Turborepo. Intelligent caching, parallel builds, and dependency graph optimization." },
+      { title: "Community Driven", desc: "Built by thousands of contributors worldwide. Every decision is transparent, every contribution matters." },
+      { title: "One Ecosystem, Everything Included", desc: "UI components, AI agents, documentation, design systems, deployment tools, databases — everything you need in a single open-source ecosystem. No vendor lock-in, ever." },
     ],
   },
   {
     columns: "1fr 1fr 1fr",
     cells: [
-      { title: "CLI & API", desc: "Full-featured CLI and REST API for complete programmatic control." },
-      { title: "Smart Previews", desc: "Every pull request gets an instant preview deployment with unique URL." },
-      { title: "Auto Deploy", desc: "Push to main and your app is live with automatic builds and rollback." },
+      { title: "Lightning Fast", desc: "Optimized for speed at every level. From build tools to runtime, everything is designed for maximum performance." },
+      { title: "Type Safe End-to-End", desc: "Full TypeScript support from database to UI. Catch errors before they happen with complete type safety across your entire stack." },
+      { title: "Production Ready", desc: "Battle-tested by thousands of teams. Deploy with confidence knowing every component is reliable and secure." },
     ],
   },
 ];
@@ -55,22 +55,19 @@ export default function Home() {
         }}
       >
         <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.5rem)", fontWeight: "bold", marginBottom: "1rem", color: "#fff" }}>
-          Welcome to Open-Source Agentic Infrastructure
+          Open-Source Agentic Infrastructure
         </h1>
-        <p style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)", color: "#999" }}>
-          Get started by editing{" "}
-          <code style={{ background: "hsl(0, 0%, 18%)", padding: "0.25rem 0.5rem", borderRadius: "4px", color: "#ccc" }}>
-            src/app/page.tsx
-          </code>
+        <p style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)", color: "#999", maxWidth: "600px" }}>
+          The largest open-source project ever created. Everything you need — components, AI agents, documentation, and tools — all open-source, all in one place.
         </p>
       </div>
 
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 1rem 4rem" }}>
         <div className="bento-row first-row">
           {[
-            { title: "Fully Composable", desc: "Every component is a building block. Combine small, focused pieces to create exactly the UI you need." },
-            { title: "AI SDK Integration", desc: "Deep integration with the AI SDK. Streaming, status states and type safety built-in." },
-            { title: "shadcn/ui Foundation", desc: "Built on shadcn/ui conventions. Your existing theme and setup apply automatically." },
+            { title: "Best Documentation in the World", desc: "Community-built, always up-to-date documentation that sets the standard for open-source projects everywhere." },
+            { title: "Best Component System", desc: "A complete, production-ready component library. Like shadcn and ai-elements, but bigger, better, and fully open-source." },
+            { title: "Built for AI Agents", desc: "First-class support for AI workflows. Streaming, tool use, memory, and autonomous coding — all built-in." },
           ].map((item, i) => (
             <div key={i} className="bento-cell">
               <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{item.title}</h3>
@@ -98,7 +95,7 @@ export default function Home() {
           </div>
         ))}
         <div className="bento-cta">
-          <h2 style={{ color: "#fff", fontSize: "1.5rem", fontWeight: 700 }}>Start building AI interfaces today</h2>
+          <h2 style={{ color: "#fff", fontSize: "1.5rem", fontWeight: 700 }}>Join the future of open-source</h2>
           <button
             style={{
               background: "#fff",
