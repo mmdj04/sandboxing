@@ -65,7 +65,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 2rem 4rem" }}>
+      <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 2rem 4rem" }}>
         {rows.map((row, rowIdx) => (
           <div
             key={rowIdx}
