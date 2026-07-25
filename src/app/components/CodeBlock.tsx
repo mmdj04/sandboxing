@@ -3,7 +3,7 @@ export function CodeBlock({ children, style }: { children: React.ReactNode; styl
     <div
       style={{
         background: "hsl(0, 0%, 13%)",
-        border: "1px solid hsl(0, 0%, 18%)",
+        border: "1px solid hsl(0, 0%, 25%)",
         borderRadius: "8px",
         padding: "1.5rem",
         overflow: "auto",

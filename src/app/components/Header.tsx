@@ -13,7 +13,7 @@ export function Header() {
           justifyContent: "space-between",
           alignItems: "center",
           padding: "1rem 2rem",
-          borderBottom: "1px solid hsl(0, 0%, 18%)",
+          borderBottom: "1px solid hsl(0, 0%, 25%)",
           position: "sticky",
           top: 0,
           background: "hsl(0, 0%, 9%)",
@@ -54,7 +54,7 @@ export function Header() {
             style={{
               display: "none",
               background: "transparent",
-              border: "1px solid hsl(0, 0%, 18%)",
+              border: "1px solid hsl(0, 0%, 25%)",
               borderRadius: "6px",
               padding: "0.5rem",
               cursor: "pointer",
@@ -88,7 +88,7 @@ export function Header() {
               onClick={() => setMenuOpen(false)}
               style={{
                 background: "transparent",
-                border: "1px solid hsl(0, 0%, 18%)",
+                border: "1px solid hsl(0, 0%, 25%)",
                 borderRadius: "6px",
                 padding: "0.5rem",
                 cursor: "pointer",

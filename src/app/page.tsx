@@ -2,7 +2,7 @@ import { CodeBlock } from "./components/CodeBlock";
 import { Header } from "./components/Header";
 import "./bento.css";
 
-const BORDER = "1px solid hsl(0, 0%, 18%)";
+const BORDER = "1px solid hsl(0, 0%, 25%)";
 const CARD_BG = "hsl(0, 0%, 9%)";
 
 const rows = [
