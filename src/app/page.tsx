@@ -3,10 +3,10 @@ const CARD_BG = "hsl(0, 0%, 13%)";
 
 const rows = [
   {
-    columns: "2fr 1fr",
+    columns: "1fr 1fr",
     cells: [
-      { title: "Lightning Fast", desc: "Optimized for speed with instant completions, real-time collaboration, and sub-millisecond response times across your entire workflow." },
-      { title: "Enterprise Security", desc: "SOC 2 compliant with end-to-end encryption and role-based access control." },
+      { title: "Fast, Flexible Installation", desc: "Install only what you need. The CLI adds components directly to your codebase with full source code access. No hidden dependencies, tree-shaking friendly." },
+      { type: "code", code: "$ npx ai-elements@latest add conversation\n✔ Checking registry.\n✔ Installing dependencies.\n✔ Created 1 file:\n  - components/ai-elements/conversation.tsx\nℹ Skipped 1 files: (files might be identical, use --overwrite to overwrite)\n  - components/ui/button.tsx" },
     ],
   },
   {
@@ -91,21 +91,27 @@ export default function Home() {
               gridTemplateColumns: row.columns,
             }}
           >
-            {row.cells.map((cell, cellIdx) => (
-              <div
-                key={cellIdx}
-                style={{
-                  background: CARD_BG,
-                  padding: "2rem",
-                  borderTop: BORDER,
-                  borderLeft: BORDER,
-                  ...(cellIdx === row.cells.length - 1 ? { borderRight: BORDER } : {}),
-                }}
-              >
-                <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
-                <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
-              </div>
-            ))}
+              {row.cells.map((cell, cellIdx) => (
+                <div
+                  key={cellIdx}
+                  style={{
+                    background: CARD_BG,
+                    padding: "2rem",
+                    borderTop: BORDER,
+                    borderLeft: BORDER,
+                    ...(cellIdx === row.cells.length - 1 ? { borderRight: BORDER } : {}),
+                  }}
+                >
+                  {cell.type === "code" ? (
+                    <pre style={{ color: "#888", fontSize: "0.8rem", lineHeight: 1.6, margin: 0, whiteSpace: "pre-wrap", fontFamily: "monospace" }}>{cell.code}</pre>
+                  ) : (
+                    <>
+                      <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
+                      <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
+                    </>
+                  )}
+                </div>
+              ))}
           </div>
         ))}
         <div
