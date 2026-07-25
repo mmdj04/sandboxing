@@ -1,3 +1,5 @@
+import { CodeBlock } from "./components/CodeBlock";
+
 const BORDER = "1px solid hsl(0, 0%, 18%)";
 const CARD_BG = "hsl(0, 0%, 13%)";
 
@@ -103,7 +105,7 @@ export default function Home() {
                   }}
                 >
                   {cell.type === "code" ? (
-                    <pre style={{ color: "#888", fontSize: "0.8rem", lineHeight: 1.6, margin: 0, whiteSpace: "pre-wrap", fontFamily: "monospace" }}>{cell.code}</pre>
+                    <CodeBlock>{cell.code}</CodeBlock>
                   ) : (
                     <>
                       <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
