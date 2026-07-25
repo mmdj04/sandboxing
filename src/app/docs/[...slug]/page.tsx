@@ -5,6 +5,16 @@ import { getDocBySlug, getAllDocs } from "@/lib/docs";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 interface DocPageProps {
   params: Promise<{ slug: string[] }>;
@@ -47,10 +57,20 @@ export default async function DocPage({ params }: DocPageProps) {
   const nextDoc =
     currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
 
+  const sectionLabels: Record<string, string> = {
+    "getting-started": "Getting Started",
+    components: "Core",
+    guides: "Guides",
+    api: "API Reference",
+    examples: "Examples",
+  };
+
   return (
     <article className="docs-article">
       <div className="docs-breadcrumb">
         <Link href="/docs">Docs</Link>
+        <span>/</span>
+        <Badge variant="secondary">{sectionLabels[doc.section] || doc.section}</Badge>
         <span>/</span>
         <span>{doc.title}</span>
       </div>
@@ -65,28 +85,26 @@ export default async function DocPage({ params }: DocPageProps) {
         }}
       />
 
-      <nav className="docs-pagination">
-        {prevDoc ? (
-          <Link
-            href={`/docs/${prevDoc.slug.join("/")}`}
-            className="docs-pagination-link prev"
-          >
-            ← {prevDoc.title}
-          </Link>
-        ) : (
-          <span />
-        )}
-        {nextDoc ? (
-          <Link
-            href={`/docs/${nextDoc.slug.join("/")}`}
-            className="docs-pagination-link next"
-          >
-            {nextDoc.title} →
-          </Link>
-        ) : (
-          <span />
-        )}
-      </nav>
+      <Separator className="my-8" />
+
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            {prevDoc ? (
+              <PaginationPrevious href={`/docs/${prevDoc.slug.join("/")}`} text={prevDoc.title} />
+            ) : (
+              <PaginationPrevious href="#" className="pointer-events-none opacity-50" text="" />
+            )}
+          </PaginationItem>
+          <PaginationItem>
+            {nextDoc ? (
+              <PaginationNext href={`/docs/${nextDoc.slug.join("/")}`} text={nextDoc.title} />
+            ) : (
+              <PaginationNext href="#" className="pointer-events-none opacity-50" text="" />
+            )}
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </article>
   );
 }

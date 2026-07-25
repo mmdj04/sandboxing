@@ -3,6 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { X, Search } from "lucide-react";
 
 interface DocsSidebarProps {
   sections: Record<string, { title: string; slug: string[] }[]>;
@@ -23,12 +27,14 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
 
   return (
     <>
-      <button
+      <Button
+        variant="outline"
+        size="sm"
         className={`docs-mobile-toggle ${mobileOpen ? "hidden" : ""}`}
         onClick={() => setMobileOpen(true)}
       >
         Menu
-      </button>
+      </Button>
       <div
         className={`docs-overlay ${mobileOpen ? "open" : ""}`}
         onClick={() => setMobileOpen(false)}
@@ -38,24 +44,26 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
           <Link href="/" className="docs-logo">
             Open-Source AI
           </Link>
-          <button
-            className="docs-sidebar-close"
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
             onClick={() => setMobileOpen(false)}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
+            <X className="h-4 w-4" />
+          </Button>
         </div>
 
         <div className="docs-search">
-          <input
-            type="text"
-            placeholder="Search docs..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="docs-search-input"
-          />
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search docs..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9"
+            />
+          </div>
         </div>
 
         <nav className="docs-nav">
