@@ -4,6 +4,7 @@ const CARD_BG = "hsl(0, 0%, 13%)";
 const rows = [
   {
     columns: "1fr 1fr 1fr",
+    standalone: true,
     cells: [
       { title: "Fully Composable", desc: "Every component is a building block. Combine small, focused pieces to create exactly the UI you need." },
       { title: "AI SDK Integration", desc: "Deep integration with the AI SDK. Streaming, status states and type safety built-in." },
@@ -67,29 +68,57 @@ export default function Home() {
 
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 2rem 4rem" }}>
         {rows.map((row, rowIdx) => (
-          <div
-            key={rowIdx}
-            style={{
-              display: "grid",
-              gridTemplateColumns: row.columns,
-            }}
-          >
-            {row.cells.map((cell, cellIdx) => (
-              <div
-                key={cellIdx}
-                style={{
-                  background: CARD_BG,
-                  padding: "2rem",
-                  borderTop: BORDER,
-                  borderLeft: BORDER,
-                  ...(cellIdx === row.cells.length - 1 ? { borderRight: BORDER } : {}),
-                }}
-              >
-                <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
-                <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
-              </div>
-            ))}
-          </div>
+          row.standalone ? (
+            <div
+              key={rowIdx}
+              style={{
+                display: "grid",
+                gridTemplateColumns: row.columns,
+                gap: "1px",
+              }}
+            >
+              {row.cells.map((cell, cellIdx) => (
+                <div
+                  key={cellIdx}
+                  style={{
+                    background: CARD_BG,
+                    padding: "2rem",
+                    borderTop: BORDER,
+                    borderLeft: BORDER,
+                    borderRight: BORDER,
+                    borderBottom: BORDER,
+                  }}
+                >
+                  <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
+                  <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div
+              key={rowIdx}
+              style={{
+                display: "grid",
+                gridTemplateColumns: row.columns,
+              }}
+            >
+              {row.cells.map((cell, cellIdx) => (
+                <div
+                  key={cellIdx}
+                  style={{
+                    background: CARD_BG,
+                    padding: "2rem",
+                    borderTop: BORDER,
+                    borderLeft: BORDER,
+                    ...(cellIdx === row.cells.length - 1 ? { borderRight: BORDER } : {}),
+                  }}
+                >
+                  <h3 style={{ color: "#fff", fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.5rem" }}>{cell.title}</h3>
+                  <p style={{ color: "#888", fontSize: "0.875rem", lineHeight: 1.6 }}>{cell.desc}</p>
+                </div>
+              ))}
+            </div>
+          )
         ))}
         <div
           style={{
