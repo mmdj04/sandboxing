@@ -4,34 +4,25 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const sections = [
-  {
-    title: "Getting Started",
-    items: [
-      { title: "Introduction", href: "/docs" },
-      { title: "Installation", href: "/docs/installation" },
-    ],
-  },
-  {
-    title: "Core",
-    items: [
-      { title: "Components", href: "/docs/components" },
-      { title: "AI Agents", href: "/docs/ai-agents" },
-      { title: "Documentation", href: "/docs/documentation-guide" },
-    ],
-  },
-  {
-    title: "Guides",
-    items: [
-      { title: "Theming", href: "/docs/theming" },
-      { title: "Deployment", href: "/docs/deployment" },
-    ],
-  },
-];
+interface Section {
+  title: string;
+  items: { title: string; href: string }[];
+}
 
-export function DocsSidebar() {
+interface DocsSidebarProps {
+  sections: Record<string, { title: string; slug: string[] }[]>;
+}
+
+export function DocsSidebar({ sections }: DocsSidebarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const sectionLabels: Record<string, string> = {
+    "getting-started": "Getting Started",
+    components: "Core",
+    guides: "Guides",
+  };
 
   return (
     <>
@@ -47,22 +38,44 @@ export function DocsSidebar() {
             Open-Source AI
           </Link>
         </div>
+
+        <div className="docs-search">
+          <input
+            type="text"
+            placeholder="Search docs..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="docs-search-input"
+          />
+        </div>
+
         <nav className="docs-nav">
-          {sections.map((section) => (
-            <div key={section.title} className="docs-section">
-              <h3 className="docs-section-title">{section.title}</h3>
+          {Object.entries(sections).map(([sectionKey, items]) => (
+            <div key={sectionKey} className="docs-section">
+              <h3 className="docs-section-title">
+                {sectionLabels[sectionKey] || sectionKey}
+              </h3>
               <ul className="docs-links">
-                {section.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className={`docs-link ${pathname === item.href ? "active" : ""}`}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
+                {items
+                  .filter(
+                    (item) =>
+                      !searchQuery ||
+                      item.title.toLowerCase().includes(searchQuery.toLowerCase())
+                  )
+                  .map((item) => {
+                    const href = `/docs/${item.slug.join("/")}`;
+                    return (
+                      <li key={href}>
+                        <Link
+                          href={href}
+                          className={`docs-link ${pathname === href ? "active" : ""}`}
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {item.title}
+                        </Link>
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
           ))}

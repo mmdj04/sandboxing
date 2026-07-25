@@ -1,32 +1,57 @@
+import Link from "next/link";
+import { getAllDocs } from "@/lib/docs";
+import "./docs.css";
+
+export const metadata = {
+  title: "Documentation | Open-Source Agentic Infrastructure",
+  description: "The best open-source documentation in the world.",
+};
+
 export default function DocsPage() {
+  const docs = getAllDocs();
+
   return (
-    <>
-      <h1>Introduction</h1>
+    <article className="docs-article">
+      <h1>Documentation</h1>
       <p>
-        <strong>Open-Source Agentic Infrastructure</strong> is the largest open-source project ever created. We&apos;re building the future of open-source software — a complete ecosystem where everything you need is free, open, and community-driven.
+        Welcome to the <strong>Open-Source Agentic Infrastructure</strong> documentation. Everything you need to build with our open-source ecosystem.
       </p>
 
-      <h2>What We Offer</h2>
+      <h2>Getting Started</h2>
+      <p>New to Open-Source AI? Start here.</p>
       <ul>
-        <li><strong>World-Class Documentation</strong> — The best open-source documentation ever written</li>
-        <li><strong>Universal Components</strong> — A complete UI component library for every use case</li>
-        <li><strong>AI-Native Tools</strong> — Built from the ground up for AI agents and automation</li>
-        <li><strong>Community Driven</strong> — Built by developers, for developers</li>
+        {docs
+          .filter((d) => d.section === "getting-started")
+          .map((doc) => (
+            <li key={doc.slug.join("/")}>
+              <Link href={`/docs/${doc.slug.join("/")}`}>{doc.title}</Link> — {doc.description}
+            </li>
+          ))}
       </ul>
 
-      <h2>Quick Start</h2>
-      <p>Get started in seconds:</p>
-      <pre><code>{`npx open-source-ai infra init my-project
-cd my-project
-npm run dev`}</code></pre>
+      <h2>Core</h2>
+      <p>Learn about our core offerings.</p>
+      <ul>
+        {docs
+          .filter((d) => d.section === "components")
+          .map((doc) => (
+            <li key={doc.slug.join("/")}>
+              <Link href={`/docs/${doc.slug.join("/")}`}>{doc.title}</Link> — {doc.description}
+            </li>
+          ))}
+      </ul>
 
-      <h2>Philosophy</h2>
-      <p>
-        We believe that the best software should be open-source. That&apos;s why we&apos;re building an entire infrastructure that&apos;s free for everyone to use, modify, and distribute.
-      </p>
-      <p>
-        No vendor lock-in. No hidden fees. Just pure, open-source innovation.
-      </p>
-    </>
+      <h2>Guides</h2>
+      <p>In-depth guides and tutorials.</p>
+      <ul>
+        {docs
+          .filter((d) => d.section === "guides")
+          .map((doc) => (
+            <li key={doc.slug.join("/")}>
+              <Link href={`/docs/${doc.slug.join("/")}`}>{doc.title}</Link> — {doc.description}
+            </li>
+          ))}
+      </ul>
+    </article>
   );
 }
