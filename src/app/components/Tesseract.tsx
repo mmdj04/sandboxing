@@ -12,27 +12,29 @@ export function Tesseract() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Responsive sizing
     const container = canvas.parentElement;
     if (!container) return;
 
+    let width: number;
+    let height: number;
+
     const updateSize = () => {
-      const width = Math.min(container.clientWidth, 500);
-      const height = width;
+      const containerWidth = Math.min(container.clientWidth - 32, 400);
+      width = containerWidth;
+      height = containerWidth;
       const dpr = window.devicePixelRatio || 1;
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
-
-      return { width, height };
     };
 
-    let { width, height } = updateSize();
+    updateSize();
 
-    // 16 vertices of a 4D hypercube (tesseract)
+    // 16 vertices of a 4D hypercube
     const vertices4D: number[][] = [];
     for (let i = 0; i < 16; i++) {
       vertices4D.push([
@@ -54,7 +56,7 @@ export function Tesseract() {
       }
     }
 
-    // 4D rotation matrices - only in 4D planes
+    // 4D rotations
     function rotateXW(v: number[], angle: number): number[] {
       const cos = Math.cos(angle);
       const sin = Math.sin(angle);
@@ -73,18 +75,16 @@ export function Tesseract() {
       return [v[0], v[1], v[2] * cos - v[3] * sin, v[2] * sin + v[3] * cos];
     }
 
-    // Fixed 3D rotation for optimal viewing angle (45 degrees on X and Y)
+    // Fixed 3D rotation for optimal viewing
     function rotateFixed3D(v: number[]): number[] {
-      const angleX = Math.PI / 4; // 45 degrees
-      const angleY = Math.PI / 4; // 45 degrees
+      const angleX = Math.PI / 4;
+      const angleY = Math.PI / 4;
 
-      // Rotate around X axis
       const cosX = Math.cos(angleX);
       const sinX = Math.sin(angleX);
       const y1 = v[1] * cosX - v[2] * sinX;
       const z1 = v[1] * sinX + v[2] * cosX;
 
-      // Rotate around Y axis
       const cosY = Math.cos(angleY);
       const sinY = Math.sin(angleY);
       const x2 = v[0] * cosY + z1 * sinY;
@@ -93,13 +93,11 @@ export function Tesseract() {
       return [x2, y1, z2];
     }
 
-    // Project 4D to 3D (perspective projection)
     function project4Dto3D(v: number[], distance: number): number[] {
       const w = distance / (distance - v[3]);
       return [v[0] * w, v[1] * w, v[2] * w];
     }
 
-    // Project 3D to 2D (perspective projection)
     function project3Dto2D(v: number[], distance: number): number[] {
       const z = distance / (distance - v[2]);
       return [v[0] * z, v[1] * z];
@@ -113,9 +111,8 @@ export function Tesseract() {
 
       const centerX = width / 2;
       const centerY = height / 2;
-      const scale = Math.min(width, height) * 0.22;
+      const scale = Math.min(width, height) * 0.15;
 
-      // Apply 4D rotations only (XW, YW, ZW planes)
       const rotatedVertices = vertices4D.map((v) => {
         let result = [...v];
         result = rotateXW(result, time * 0.4);
@@ -124,21 +121,14 @@ export function Tesseract() {
         return result;
       });
 
-      // Project to 3D
       const vertices3D = rotatedVertices.map((v) => project4Dto3D(v, 3.5));
-
-      // Apply fixed 3D rotation for optimal viewing angle
       const rotated3D = vertices3D.map((v) => rotateFixed3D(v));
-
-      // Project to 2D
       const vertices2D = rotated3D.map((v) => project3Dto2D(v, 6));
 
-      // Calculate depth for coloring
       const depths = rotated3D.map((v) => v[2]);
       const minDepth = Math.min(...depths);
       const maxDepth = Math.max(...depths);
 
-      // Draw edges
       edges.forEach(([i, j]) => {
         const v1 = vertices2D[i];
         const v2 = vertices2D[j];
@@ -157,7 +147,6 @@ export function Tesseract() {
         ctx.stroke();
       });
 
-      // Draw vertices
       vertices2D.forEach((v, i) => {
         const depth = (depths[i] - minDepth) / (maxDepth - minDepth);
         const alpha = 0.3 + depth * 0.7;
@@ -177,9 +166,7 @@ export function Tesseract() {
     render();
 
     const handleResize = () => {
-      const result = updateSize();
-      width = result.width;
-      height = result.height;
+      updateSize();
     };
 
     window.addEventListener("resize", handleResize);
@@ -201,3 +188,5 @@ export function Tesseract() {
     />
   );
 }
+
+

@@ -53,15 +53,15 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "2rem 1rem 3rem",
+          padding: "1rem 1rem 4rem",
           textAlign: "center",
           position: "relative",
         }}
       >
-        <div style={{ position: "relative", width: "100%", maxWidth: "500px", margin: "0 auto" }}>
+        <div style={{ position: "relative", width: "100%", maxWidth: "432px", margin: "0 auto", padding: "16px" }}>
           <Tesseract />
         </div>
-        <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.5rem)", fontWeight: "bold", marginBottom: "1rem", color: "#fff", marginTop: "1.5rem", position: "relative", zIndex: 10 }}>
+        <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.5rem)", fontWeight: "bold", marginBottom: "1rem", color: "#fff", marginTop: "2rem", position: "relative", zIndex: 10 }}>
           Open-Source Agentic Infrastructure
         </h1>
         <p style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)", color: "#999", maxWidth: "600px", position: "relative", zIndex: 10 }}>
