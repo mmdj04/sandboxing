@@ -30,7 +30,7 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
       <Button
         variant="outline"
         size="sm"
-        className={`docs-mobile-toggle ${mobileOpen ? "hidden" : ""}`}
+        className={`docs-mobile-toggle flex items-center justify-center ${mobileOpen ? "hidden" : ""}`}
         onClick={() => setMobileOpen(true)}
       >
         Menu
