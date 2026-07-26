@@ -1,21 +1,72 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Fuse from "fuse.js";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { X, Search } from "lucide-react";
+import { X, Search, FileText } from "lucide-react";
 
-interface DocsSidebarProps {
-  sections: Record<string, { title: string; slug: string[] }[]>;
+interface DocItem {
+  title: string;
+  slug: string[];
+  section: string;
+  description?: string;
+  content?: string;
 }
 
-export function DocsSidebar({ sections }: DocsSidebarProps) {
+interface DocsSidebarProps {
+  sections: Record<string, DocItem[]>;
+  allDocs: DocItem[];
+}
+
+export function DocsSidebar({ sections, allDocs }: DocsSidebarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<DocItem[]>([]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const fuse = useMemo(() => {
+    return new Fuse(allDocs, {
+      keys: [
+        { name: "title", weight: 2 },
+        { name: "description", weight: 1 },
+        { name: "content", weight: 0.5 },
+      ],
+      threshold: 0.3,
+      includeMatches: true,
+      minMatchCharLength: 2,
+    });
+  }, [allDocs]);
+
+  useEffect(() => {
+    if (searchQuery.length >= 2) {
+      const results = fuse.search(searchQuery).map((r) => r.item);
+      setSearchResults(results);
+      setIsSearchOpen(true);
+    } else {
+      setSearchResults([]);
+      setIsSearchOpen(false);
+    }
+  }, [searchQuery, fuse]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+      if (e.key === "Escape") {
+        setSearchQuery("");
+        inputRef.current?.blur();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const sectionLabels: Record<string, string> = {
     "getting-started": "Getting Started",
@@ -58,7 +109,8 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search docs..."
+              ref={inputRef}
+              placeholder="Search docs... (⌘K)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-9"
@@ -66,20 +118,46 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
           </div>
         </div>
 
-        <nav className="docs-nav">
-          {Object.entries(sections).map(([sectionKey, items]) => (
-            <div key={sectionKey} className="docs-section">
-              <h3 className="docs-section-title">
-                {sectionLabels[sectionKey] || sectionKey}
-              </h3>
-              <ul className="docs-links">
-                {items
-                  .filter(
-                    (item) =>
-                      !searchQuery ||
-                      item.title.toLowerCase().includes(searchQuery.toLowerCase())
-                  )
-                  .map((item) => {
+        {isSearchOpen && searchResults.length > 0 && (
+          <div className="docs-search-results">
+            <div className="docs-search-results-header">
+              {searchResults.length} result{searchResults.length !== 1 ? "s" : ""} found
+            </div>
+            <ul className="docs-links">
+              {searchResults.map((item) => {
+                const href = `/docs/${item.slug.join("/")}`;
+                return (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      className={`docs-link ${pathname === href ? "active" : ""}`}
+                      onClick={() => {
+                        setMobileOpen(false);
+                        setSearchQuery("");
+                      }}
+                    >
+                      <FileText className="inline-block w-4 h-4 mr-2 opacity-50" />
+                      {item.title}
+                      <span className="docs-search-section">
+                        {sectionLabels[item.section] || item.section}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+
+        {!isSearchOpen && (
+          <nav className="docs-nav">
+            {Object.entries(sections).map(([sectionKey, items]) => (
+              <div key={sectionKey} className="docs-section">
+                <h3 className="docs-section-title">
+                  {sectionLabels[sectionKey] || sectionKey}
+                </h3>
+                <ul className="docs-links">
+                  {items.map((item) => {
                     const href = `/docs/${item.slug.join("/")}`;
                     return (
                       <li key={href}>
@@ -93,10 +171,11 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
                       </li>
                     );
                   })}
-              </ul>
-            </div>
-          ))}
-        </nav>
+                </ul>
+              </div>
+            ))}
+          </nav>
+        )}
       </aside>
     </>
   );

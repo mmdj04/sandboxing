@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DocsSidebar } from "./components/DocsSidebar";
-import { getDocsBySection } from "@/lib/docs";
+import { getDocsBySection, getAllDocsWithContent } from "@/lib/docs";
 import "./docs.css";
 
 export const metadata: Metadata = {
@@ -14,10 +14,11 @@ export default function DocsLayout({
   children: React.ReactNode;
 }) {
   const sections = getDocsBySection();
+  const allDocs = getAllDocsWithContent();
 
   return (
     <div className="docs-layout">
-      <DocsSidebar sections={sections} />
+      <DocsSidebar sections={sections} allDocs={allDocs} />
       <main className="docs-main">
         <div className="docs-content">{children}</div>
       </main>

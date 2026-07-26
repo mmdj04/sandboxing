@@ -8,12 +8,16 @@ export interface DocMeta {
   title: string;
   description: string;
   order: number;
-  slug: string;
+  slug: string[];
   section: string;
 }
 
 export interface DocFile extends DocMeta {
   content: string;
+}
+
+export interface DocSearchItem extends DocMeta {
+  content?: string;
 }
 
 function getSectionFromPath(filePath: string): string {
@@ -49,6 +53,35 @@ export function getAllDocs(): DocMeta[] {
           order: data.order || 999,
           slug: getSlugFromPath(fullPath),
           section: getSectionFromPath(fullPath),
+        });
+      }
+    }
+  }
+
+  readDir(docsDirectory);
+
+  return files.sort((a, b) => a.order - b.order);
+}
+
+export function getAllDocsWithContent(): DocSearchItem[] {
+  const files: DocSearchItem[] = [];
+
+  function readDir(dir: string) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        readDir(fullPath);
+      } else if (entry.name.endsWith(".mdx")) {
+        const fileContents = fs.readFileSync(fullPath, "utf8");
+        const { data, content } = matter(fileContents);
+        files.push({
+          title: data.title || entry.name.replace(/\.mdx?$/, ""),
+          description: data.description || "",
+          order: data.order || 999,
+          slug: getSlugFromPath(fullPath),
+          section: getSectionFromPath(fullPath),
+          content: content.slice(0, 500),
         });
       }
     }
