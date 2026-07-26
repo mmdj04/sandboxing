@@ -12,13 +12,25 @@ export function Tesseract() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const size = 400;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = size * dpr;
-    canvas.height = size * dpr;
-    canvas.style.width = `${size}px`;
-    canvas.style.height = `${size}px`;
-    ctx.scale(dpr, dpr);
+    // Responsive sizing
+    const container = canvas.parentElement;
+    if (!container) return;
+
+    const updateSize = () => {
+      const width = Math.min(container.clientWidth, 500);
+      const height = width;
+      const dpr = window.devicePixelRatio || 1;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.scale(dpr, dpr);
+
+      return { width, height };
+    };
+
+    let { width, height } = updateSize();
 
     // 16 vertices of a 4D hypercube (tesseract)
     const vertices4D: number[][] = [];
@@ -42,8 +54,7 @@ export function Tesseract() {
       }
     }
 
-    // 4D rotation matrices - only rotate in 4D planes (XW, YW, ZW)
-    // This creates the 4D movement without rotating the 3D/2D projection
+    // 4D rotation matrices - only in 4D planes
     function rotateXW(v: number[], angle: number): number[] {
       const cos = Math.cos(angle);
       const sin = Math.sin(angle);
@@ -62,6 +73,26 @@ export function Tesseract() {
       return [v[0], v[1], v[2] * cos - v[3] * sin, v[2] * sin + v[3] * cos];
     }
 
+    // Fixed 3D rotation for optimal viewing angle (45 degrees on X and Y)
+    function rotateFixed3D(v: number[]): number[] {
+      const angleX = Math.PI / 4; // 45 degrees
+      const angleY = Math.PI / 4; // 45 degrees
+
+      // Rotate around X axis
+      const cosX = Math.cos(angleX);
+      const sinX = Math.sin(angleX);
+      const y1 = v[1] * cosX - v[2] * sinX;
+      const z1 = v[1] * sinX + v[2] * cosX;
+
+      // Rotate around Y axis
+      const cosY = Math.cos(angleY);
+      const sinY = Math.sin(angleY);
+      const x2 = v[0] * cosY + z1 * sinY;
+      const z2 = -v[0] * sinY + z1 * cosY;
+
+      return [x2, y1, z2];
+    }
+
     // Project 4D to 3D (perspective projection)
     function project4Dto3D(v: number[], distance: number): number[] {
       const w = distance / (distance - v[3]);
@@ -78,30 +109,32 @@ export function Tesseract() {
     let time = 0;
 
     function render() {
-      ctx.clearRect(0, 0, size, size);
+      ctx.clearRect(0, 0, width, height);
 
-      const centerX = size / 2;
-      const centerY = size / 2;
-      const scale = 80;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const scale = Math.min(width, height) * 0.22;
 
-      // Apply ONLY 4D rotations (XW, YW, ZW planes)
-      // This creates the 4D movement effect without rotating in 3D space
+      // Apply 4D rotations only (XW, YW, ZW planes)
       const rotatedVertices = vertices4D.map((v) => {
         let result = [...v];
-        result = rotateXW(result, time * 0.5);
-        result = rotateYW(result, time * 0.3);
-        result = rotateZW(result, time * 0.4);
+        result = rotateXW(result, time * 0.4);
+        result = rotateYW(result, time * 0.25);
+        result = rotateZW(result, time * 0.35);
         return result;
       });
 
       // Project to 3D
-      const vertices3D = rotatedVertices.map((v) => project4Dto3D(v, 3));
+      const vertices3D = rotatedVertices.map((v) => project4Dto3D(v, 3.5));
+
+      // Apply fixed 3D rotation for optimal viewing angle
+      const rotated3D = vertices3D.map((v) => rotateFixed3D(v));
 
       // Project to 2D
-      const vertices2D = vertices3D.map((v) => project3Dto2D(v, 5));
+      const vertices2D = rotated3D.map((v) => project3Dto2D(v, 6));
 
       // Calculate depth for coloring
-      const depths = vertices3D.map((v) => v[2]);
+      const depths = rotated3D.map((v) => v[2]);
       const minDepth = Math.min(...depths);
       const maxDepth = Math.max(...depths);
 
@@ -137,14 +170,23 @@ export function Tesseract() {
         ctx.fill();
       });
 
-      time += 0.008;
+      time += 0.006;
       animationId = requestAnimationFrame(render);
     }
 
     render();
 
+    const handleResize = () => {
+      const result = updateSize();
+      width = result.width;
+      height = result.height;
+    };
+
+    window.addEventListener("resize", handleResize);
+
     return () => {
       cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -154,6 +196,7 @@ export function Tesseract() {
       style={{
         display: "block",
         margin: "0 auto",
+        maxWidth: "100%",
       }}
     />
   );
