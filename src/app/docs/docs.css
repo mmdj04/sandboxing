@@ -49,15 +49,9 @@
   background: hsl(0, 0%, 15%);
 }
 
-@media (max-width: 768px) {
-  .docs-sidebar-close {
-    display: flex;
-  }
-}
-
 @media (min-width: 769px) {
   .docs-sidebar-close {
-    display: flex;
+    display: none;
   }
 }
 
