@@ -1,3 +1,5 @@
+"use client";
+
 import { CodeBlock } from "./components/CodeBlock";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
