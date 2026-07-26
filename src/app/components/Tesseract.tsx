@@ -28,6 +28,7 @@ export function Tesseract() {
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
+      canvas.style.overflow = "visible";
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
@@ -184,6 +185,7 @@ export function Tesseract() {
         display: "block",
         margin: "0 auto",
         maxWidth: "100%",
+        overflow: "visible",
       }}
     />
   );
