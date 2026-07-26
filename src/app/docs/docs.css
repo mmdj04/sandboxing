@@ -213,6 +213,112 @@
   color: #ccc;
 }
 
+.openapi-container {
+  margin-bottom: 1.5rem;
+}
+
+.openapi-endpoint {
+  border: 1px solid hsl(0, 0%, 20%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.openapi-endpoint-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.openapi-method {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.openapi-path {
+  font-family: monospace;
+  font-size: 1rem;
+  color: #999;
+}
+
+.openapi-summary {
+  font-size: 1rem;
+  color: #fff;
+  margin: 0 0 0.5rem 0;
+}
+
+.openapi-description {
+  font-size: 0.875rem;
+  color: #999;
+  margin: 0 0 1rem 0;
+}
+
+.openapi-parameters h4,
+.openapi-responses h4 {
+  font-size: 0.875rem;
+  color: #fff;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.openapi-parameters table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.openapi-parameters th,
+.openapi-parameters td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid hsl(0, 0%, 20%);
+  font-size: 0.875rem;
+}
+
+.openapi-parameters th {
+  color: #666;
+  font-weight: 600;
+}
+
+.openapi-parameters td {
+  color: #999;
+}
+
+.openapi-response-codes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.openapi-response {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #999;
+}
+
+.openapi-status-code {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: hsl(0, 0%, 15%);
+}
+
+.openapi-status-code.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.openapi-status-code.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
 .docs-nav {
   padding: 1rem 0;
 }
