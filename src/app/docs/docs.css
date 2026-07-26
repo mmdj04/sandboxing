@@ -319,6 +319,38 @@
   color: #ef4444;
 }
 
+.search-dialog {
+  background: hsl(0, 0%, 10%);
+  border: 1px solid hsl(0, 0%, 20%);
+}
+
+.search-dialog [data-slot="dialog-content"] {
+  background: hsl(0, 0%, 10%);
+}
+
+.search-results {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(0, 0%, 25%) transparent;
+}
+
+.search-results::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 25%);
+  border-radius: 3px;
+}
+
+.search-result {
+  text-decoration: none;
+  color: inherit;
+}
+
 .docs-nav {
   padding: 1rem 0;
 }
