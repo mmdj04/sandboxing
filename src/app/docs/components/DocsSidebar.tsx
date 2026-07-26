@@ -47,7 +47,7 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8"
+            className="docs-sidebar-close h-8 w-8"
             onClick={() => setMobileOpen(false)}
           >
             <X className="h-4 w-4" />
