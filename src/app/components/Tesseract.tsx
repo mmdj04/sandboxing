@@ -21,7 +21,6 @@ export function Tesseract() {
     ctx.scale(dpr, dpr);
 
     // 16 vertices of a 4D hypercube (tesseract)
-    // Each vertex is [x, y, z, w] where coordinates are -1 or 1
     const vertices4D: number[][] = [];
     for (let i = 0; i < 16; i++) {
       vertices4D.push([
@@ -32,7 +31,7 @@ export function Tesseract() {
       ]);
     }
 
-    // 32 edges: connect vertices that differ by exactly one coordinate
+    // 32 edges
     const edges: [number, number][] = [];
     for (let i = 0; i < 16; i++) {
       for (let j = i + 1; j < 16; j++) {
@@ -43,29 +42,12 @@ export function Tesseract() {
       }
     }
 
-    // 4D rotation matrices (plane rotations)
-    function rotateXY(v: number[], angle: number): number[] {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      return [v[0] * cos - v[1] * sin, v[0] * sin + v[1] * cos, v[2], v[3]];
-    }
-
-    function rotateXZ(v: number[], angle: number): number[] {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      return [v[0] * cos - v[2] * sin, v[1], v[0] * sin + v[2] * cos, v[3]];
-    }
-
+    // 4D rotation matrices - only rotate in 4D planes (XW, YW, ZW)
+    // This creates the 4D movement without rotating the 3D/2D projection
     function rotateXW(v: number[], angle: number): number[] {
       const cos = Math.cos(angle);
       const sin = Math.sin(angle);
       return [v[0] * cos - v[3] * sin, v[1], v[2], v[0] * sin + v[3] * cos];
-    }
-
-    function rotateYZ(v: number[], angle: number): number[] {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      return [v[0], v[1] * cos - v[2] * sin, v[1] * sin + v[2] * cos, v[3]];
     }
 
     function rotateYW(v: number[], angle: number): number[] {
@@ -102,15 +84,13 @@ export function Tesseract() {
       const centerY = size / 2;
       const scale = 80;
 
-      // Apply 4D rotations with different speeds
+      // Apply ONLY 4D rotations (XW, YW, ZW planes)
+      // This creates the 4D movement effect without rotating in 3D space
       const rotatedVertices = vertices4D.map((v) => {
         let result = [...v];
-        result = rotateXY(result, time * 0.5);
-        result = rotateXZ(result, time * 0.3);
-        result = rotateXW(result, time * 0.7);
-        result = rotateYZ(result, time * 0.2);
-        result = rotateYW(result, time * 0.4);
-        result = rotateZW(result, time * 0.6);
+        result = rotateXW(result, time * 0.5);
+        result = rotateYW(result, time * 0.3);
+        result = rotateZW(result, time * 0.4);
         return result;
       });
 
@@ -133,8 +113,8 @@ export function Tesseract() {
         const depth2 = (depths[j] - minDepth) / (maxDepth - minDepth);
         const avgDepth = (depth1 + depth2) / 2;
 
-        const alpha = 0.2 + avgDepth * 0.6;
-        const brightness = Math.floor(100 + avgDepth * 155);
+        const alpha = 0.15 + avgDepth * 0.5;
+        const brightness = Math.floor(80 + avgDepth * 175);
 
         ctx.beginPath();
         ctx.moveTo(centerX + v1[0] * scale, centerY + v1[1] * scale);
