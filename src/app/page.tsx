@@ -1,6 +1,7 @@
 import { CodeBlock } from "./components/CodeBlock";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { Tesseract } from "./components/Tesseract";
 import "./bento.css";
 
 const BORDER = "1px solid hsl(0, 0%, 25%)";
@@ -50,14 +51,18 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "4rem 1rem 2rem",
+          padding: "2rem 1rem 0",
           textAlign: "center",
+          position: "relative",
         }}
       >
-        <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.5rem)", fontWeight: "bold", marginBottom: "1rem", color: "#fff" }}>
+        <div style={{ position: "relative", width: "400px", height: "400px" }}>
+          <Tesseract />
+        </div>
+        <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.5rem)", fontWeight: "bold", marginBottom: "1rem", color: "#fff", marginTop: "-2rem", position: "relative", zIndex: 10 }}>
           Open-Source Agentic Infrastructure
         </h1>
-        <p style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)", color: "#999", maxWidth: "600px" }}>
+        <p style={{ fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)", color: "#999", maxWidth: "600px", position: "relative", zIndex: 10 }}>
           The largest open-source project ever created. Everything you need — components, AI agents, documentation, and tools — all open-source, all in one place.
         </p>
       </div>
