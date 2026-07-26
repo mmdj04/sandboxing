@@ -111,7 +111,7 @@ export function Tesseract() {
 
       const centerX = width / 2;
       const centerY = height / 2;
-      const scale = Math.min(width, height) * 0.22;
+      const scale = Math.min(width, height) * 0.28;
 
       const rotatedVertices = vertices4D.map((v) => {
         let result = [...v];
@@ -121,9 +121,9 @@ export function Tesseract() {
         return result;
       });
 
-      const vertices3D = rotatedVertices.map((v) => project4Dto3D(v, 3.5));
+      const vertices3D = rotatedVertices.map((v) => project4Dto3D(v, 4));
       const rotated3D = vertices3D.map((v) => rotateFixed3D(v));
-      const vertices2D = rotated3D.map((v) => project3Dto2D(v, 6));
+      const vertices2D = rotated3D.map((v) => project3Dto2D(v, 7));
 
       const depths = rotated3D.map((v) => v[2]);
       const minDepth = Math.min(...depths);
