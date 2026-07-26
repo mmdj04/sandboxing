@@ -320,12 +320,20 @@
 }
 
 .search-dialog {
-  background: hsl(0, 0%, 10%);
-  border: 1px solid hsl(0, 0%, 20%);
+  background: hsl(0, 0%, 10%) !important;
+  border: 1px solid hsl(0, 0%, 20%) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
 }
 
 .search-dialog [data-slot="dialog-content"] {
-  background: hsl(0, 0%, 10%);
+  background: hsl(0, 0%, 10%) !important;
+}
+
+.search-dialog [data-slot="dialog-overlay"] {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px);
 }
 
 .search-results {

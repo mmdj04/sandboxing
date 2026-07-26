@@ -85,10 +85,10 @@ export function SearchDialog({ open, onOpenChange, allDocs }: SearchDialogProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="search-dialog sm:max-w-[550px] p-0 gap-0">
+      <DialogContent className="search-dialog sm:max-w-[550px] p-0 gap-0 border-0 bg-transparent shadow-none">
         <DialogHeader className="p-4 pb-2">
-          <DialogTitle className="flex items-center gap-2 text-base">
-            <Search className="w-5 h-5 text-muted-foreground" />
+          <DialogTitle className="flex items-center gap-2 text-base text-white">
+            <Search className="w-5 h-5 text-gray-400" />
             Search Documentation
           </DialogTitle>
         </DialogHeader>
@@ -106,7 +106,7 @@ export function SearchDialog({ open, onOpenChange, allDocs }: SearchDialogProps)
 
         <div className="search-results max-h-[400px] overflow-y-auto px-2 pb-4">
           {searchResults.length === 0 ? (
-            <div className="py-8 text-center text-muted-foreground">
+            <div className="py-8 text-center text-gray-400">
               No results found for &quot;{searchQuery}&quot;
             </div>
           ) : (
@@ -120,22 +120,22 @@ export function SearchDialog({ open, onOpenChange, allDocs }: SearchDialogProps)
                     onClick={() => onOpenChange(false)}
                     className={`search-result flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                       index === selectedIndex
-                        ? "bg-accent text-accent-foreground"
-                        : "hover:bg-accent/50"
+                        ? "bg-white/10 text-white"
+                        : "hover:bg-white/5 text-gray-300"
                     }`}
                   >
-                    <div className="flex-shrink-0 w-8 h-8 rounded-md bg-muted flex items-center justify-center">
-                      <FileText className="w-4 h-4 text-muted-foreground" />
+                    <div className="flex-shrink-0 w-8 h-8 rounded-md bg-white/10 flex items-center justify-center">
+                      <FileText className="w-4 h-4 text-gray-400" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-sm truncate">
                         {item.title}
                       </div>
-                      <div className="text-xs text-muted-foreground truncate">
+                      <div className="text-xs text-gray-500 truncate">
                         {item.description || sectionLabels[item.section] || item.section}
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                    <ArrowRight className="w-4 h-4 text-gray-500 flex-shrink-0" />
                   </Link>
                 );
               })}
@@ -143,19 +143,19 @@ export function SearchDialog({ open, onOpenChange, allDocs }: SearchDialogProps)
           )}
         </div>
 
-        <div className="flex items-center justify-between px-4 py-2 border-t text-xs text-muted-foreground">
+        <div className="flex items-center justify-between px-4 py-2 border-t border-white/10 text-xs text-gray-400">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">↑↓</kbd>
+              <kbd className="px-1.5 py-0.5 rounded bg-white/10 font-mono">↑↓</kbd>
               Navigate
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">↵</kbd>
+              <kbd className="px-1.5 py-0.5 rounded bg-white/10 font-mono">↵</kbd>
               Open
             </span>
           </div>
           <span className="flex items-center gap-1">
-            <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">esc</kbd>
+            <kbd className="px-1.5 py-0.5 rounded bg-white/10 font-mono">esc</kbd>
             Close
           </span>
         </div>
