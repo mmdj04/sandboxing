@@ -157,7 +157,6 @@ export function Tesseract() {
         ctx.fill();
       });
 
-      render();
     }
 
     render();
