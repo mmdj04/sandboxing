@@ -4,8 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { Tesseract } from "../components/Tesseract";
-
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
@@ -26,11 +24,6 @@ export default function SearchPage() {
       <Header />
       
       <main style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1rem", marginTop: "-4rem" }}>
-        {/* Tesseract Animation */}
-        <div style={{ width: "100%", maxWidth: "300px", marginBottom: "1.5rem" }}>
-          <Tesseract />
-        </div>
-
         {/* Logo / Title */}
         <h1 style={{ 
           fontSize: "clamp(2rem, 8vw, 4rem)", 

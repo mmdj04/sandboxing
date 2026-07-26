@@ -104,9 +104,6 @@ export function Tesseract() {
       return [v[0] * z, v[1] * z];
     }
 
-    let animationId: number;
-    let time = 0;
-
     function render() {
       ctx.clearRect(0, 0, width, height);
 
@@ -116,9 +113,9 @@ export function Tesseract() {
 
       const rotatedVertices = vertices4D.map((v) => {
         let result = [...v];
-        result = rotateXW(result, time * 0.4);
-        result = rotateYW(result, time * 0.25);
-        result = rotateZW(result, time * 0.35);
+        result = rotateXW(result, 1.2);
+        result = rotateYW(result, 0.8);
+        result = rotateZW(result, 1.0);
         return result;
       });
 
@@ -160,8 +157,7 @@ export function Tesseract() {
         ctx.fill();
       });
 
-      time += 0.006;
-      animationId = requestAnimationFrame(render);
+      render();
     }
 
     render();
@@ -173,7 +169,6 @@ export function Tesseract() {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      cancelAnimationFrame(animationId);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
