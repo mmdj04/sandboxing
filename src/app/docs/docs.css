@@ -309,6 +309,12 @@
   font-weight: 600;
 }
 
+.docs-article hr {
+  border: none;
+  border-top: 1px solid hsl(0, 0%, 20%);
+  margin: 2rem 0;
+}
+
 .docs-pagination {
   display: flex;
   justify-content: space-between;
