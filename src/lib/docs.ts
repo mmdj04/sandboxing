@@ -3,6 +3,10 @@ import path from "path";
 import matter from "gray-matter";
 
 const docsDirectory = path.join(process.cwd(), "content/docs");
+const versionsDirectory = path.join(process.cwd(), "content/versions");
+
+export const AVAILABLE_VERSIONS = ["v1.0", "v2.0", "latest"] as const;
+export type Version = (typeof AVAILABLE_VERSIONS)[number];
 
 export interface DocMeta {
   title: string;
@@ -10,6 +14,7 @@ export interface DocMeta {
   order: number;
   slug: string[];
   section: string;
+  version?: Version;
 }
 
 export interface DocFile extends DocMeta {
@@ -35,8 +40,13 @@ function getSlugFromPath(filePath: string): string[] {
   return withoutExt.split(path.sep).filter(Boolean);
 }
 
-export function getAllDocs(): DocMeta[] {
+export function getAllDocs(version: Version = "latest"): DocMeta[] {
   const files: DocMeta[] = [];
+  const baseDir = version === "latest" ? docsDirectory : path.join(versionsDirectory, version);
+
+  if (!fs.existsSync(baseDir)) {
+    return getAllDocs("latest");
+  }
 
   function readDir(dir: string) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -53,18 +63,24 @@ export function getAllDocs(): DocMeta[] {
           order: data.order || 999,
           slug: getSlugFromPath(fullPath),
           section: getSectionFromPath(fullPath),
+          version,
         });
       }
     }
   }
 
-  readDir(docsDirectory);
+  readDir(baseDir);
 
   return files.sort((a, b) => a.order - b.order);
 }
 
-export function getAllDocsWithContent(): DocSearchItem[] {
+export function getAllDocsWithContent(version: Version = "latest"): DocSearchItem[] {
   const files: DocSearchItem[] = [];
+  const baseDir = version === "latest" ? docsDirectory : path.join(versionsDirectory, version);
+
+  if (!fs.existsSync(baseDir)) {
+    return getAllDocsWithContent("latest");
+  }
 
   function readDir(dir: string) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -82,19 +98,21 @@ export function getAllDocsWithContent(): DocSearchItem[] {
           slug: getSlugFromPath(fullPath),
           section: getSectionFromPath(fullPath),
           content: content.slice(0, 500),
+          version,
         });
       }
     }
   }
 
-  readDir(docsDirectory);
+  readDir(baseDir);
 
   return files.sort((a, b) => a.order - b.order);
 }
 
-export function getDocBySlug(slug: string[]): DocFile | null {
-  const filePath = path.join(docsDirectory, ...slug) + ".mdx";
-  const indexPath = path.join(docsDirectory, ...slug, "index.mdx");
+export function getDocBySlug(slug: string[], version: Version = "latest"): DocFile | null {
+  const baseDir = version === "latest" ? docsDirectory : path.join(versionsDirectory, version);
+  const filePath = path.join(baseDir, ...slug) + ".mdx";
+  const indexPath = path.join(baseDir, ...slug, "index.mdx");
 
   let actualPath = filePath;
   if (!fs.existsSync(filePath) && fs.existsSync(indexPath)) {
@@ -102,6 +120,9 @@ export function getDocBySlug(slug: string[]): DocFile | null {
   }
 
   if (!fs.existsSync(actualPath)) {
+    if (version !== "latest") {
+      return getDocBySlug(slug, "latest");
+    }
     return null;
   }
 
@@ -115,11 +136,12 @@ export function getDocBySlug(slug: string[]): DocFile | null {
     slug: getSlugFromPath(actualPath),
     section: getSectionFromPath(actualPath),
     content,
+    version,
   };
 }
 
-export function getDocsBySection(): Record<string, DocMeta[]> {
-  const docs = getAllDocs();
+export function getDocsBySection(version: Version = "latest"): Record<string, DocMeta[]> {
+  const docs = getAllDocs(version);
   const sections: Record<string, DocMeta[]> = {};
 
   for (const doc of docs) {
@@ -132,8 +154,8 @@ export function getDocsBySection(): Record<string, DocMeta[]> {
   return sections;
 }
 
-export function searchDocs(query: string): DocMeta[] {
-  const docs = getAllDocs();
+export function searchDocs(query: string, version: Version = "latest"): DocMeta[] {
+  const docs = getAllDocs(version);
   const lowerQuery = query.toLowerCase();
 
   return docs.filter(

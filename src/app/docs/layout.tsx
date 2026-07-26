@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DocsSidebar } from "./components/DocsSidebar";
-import { getDocsBySection, getAllDocsWithContent } from "@/lib/docs";
+import { getDocsBySection, getAllDocsWithContent, AVAILABLE_VERSIONS, type Version } from "@/lib/docs";
 import "./docs.css";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function DocsLayout({
 
   return (
     <div className="docs-layout">
-      <DocsSidebar sections={sections} allDocs={allDocs} />
+      <DocsSidebar sections={sections} allDocs={allDocs} versions={AVAILABLE_VERSIONS} />
       <main className="docs-main">
         <div className="docs-content">{children}</div>
       </main>
