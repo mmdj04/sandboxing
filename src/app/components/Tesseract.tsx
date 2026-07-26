@@ -111,7 +111,7 @@ export function Tesseract() {
 
       const centerX = width / 2;
       const centerY = height / 2;
-      const scale = Math.min(width, height) * 0.28;
+      const scale = Math.min(width, height) * 0.2;
 
       const rotatedVertices = vertices4D.map((v) => {
         let result = [...v];
