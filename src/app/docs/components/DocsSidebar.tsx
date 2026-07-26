@@ -42,7 +42,7 @@ export function DocsSidebar({ sections }: DocsSidebarProps) {
       <aside className={`docs-sidebar ${mobileOpen ? "open" : ""}`}>
         <div className="docs-sidebar-header">
           <Link href="/" className="docs-logo">
-            Open-Source AI
+            AI Documentation
           </Link>
           <Button
             variant="ghost"
