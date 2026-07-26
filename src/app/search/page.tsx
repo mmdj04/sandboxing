@@ -13,7 +13,7 @@ export default function SearchPage() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/docs?q=${encodeURIComponent(searchQuery)}`);
+      router.push(`/search/results?q=${encodeURIComponent(searchQuery)}`);
     }
   };
 
