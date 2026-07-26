@@ -58,7 +58,7 @@ export default function Home() {
           position: "relative",
         }}
       >
-        <div style={{ position: "relative", width: "100%", maxWidth: "400px", margin: "0 auto", padding: "24px" }}>
+        <div style={{ position: "relative", width: "100%", maxWidth: "500px", margin: "0 auto", padding: "16px" }}>
           <Tesseract />
         </div>
         <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.5rem)", fontWeight: "bold", marginBottom: "1rem", color: "#fff", marginTop: "2rem", position: "relative", zIndex: 10 }}>
