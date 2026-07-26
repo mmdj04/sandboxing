@@ -9,7 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { FileText, Search, ArrowRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { FileText, Search, ArrowRight, Hash } from "lucide-react";
 
 interface DocItem {
   title: string;
@@ -84,36 +85,32 @@ export function SearchDialog({ open, onOpenChange, allDocs }: SearchDialogProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="search-dialog sm:max-w-[550px] p-0 border-0">
-        <DialogHeader className="p-4 pb-3 border-b border-white/10">
-          <DialogTitle className="flex items-center gap-2 text-[15px] font-medium text-white">
-            <Search className="w-4 h-4 text-gray-400" />
+      <DialogContent className="search-dialog sm:max-w-[550px] p-0 gap-0">
+        <DialogHeader className="p-4 pb-2">
+          <DialogTitle className="flex items-center gap-2 text-base">
+            <Search className="w-5 h-5 text-muted-foreground" />
             Search Documentation
           </DialogTitle>
         </DialogHeader>
 
-        <div className="px-4 pb-3 pt-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Search docs..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              className="w-full bg-[hsl(0,0%,12%)] border border-[hsl(0,0%,20%)] rounded-lg text-white placeholder-gray-500 pl-10 pr-4 py-2.5 text-sm outline-none focus:border-[hsl(0,0%,30%)] transition-colors"
-            />
-          </div>
+        <div className="px-4 pb-2">
+          <Input
+            ref={inputRef}
+            placeholder="Search docs... (⌘K)"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="w-full"
+          />
         </div>
 
-        <div className="search-results max-h-[360px] overflow-y-auto">
+        <div className="search-results max-h-[400px] overflow-y-auto px-2 pb-4">
           {searchResults.length === 0 ? (
-            <div className="py-12 text-center text-gray-500 text-sm">
+            <div className="py-8 text-center text-muted-foreground">
               No results found for &quot;{searchQuery}&quot;
             </div>
           ) : (
-            <div className="pb-2">
+            <div className="space-y-1">
               {searchResults.map((item, index) => {
                 const href = `/docs/${item.slug.join("/")}`;
                 return (
@@ -121,24 +118,24 @@ export function SearchDialog({ open, onOpenChange, allDocs }: SearchDialogProps)
                     key={href}
                     href={href}
                     onClick={() => onOpenChange(false)}
-                    className={`search-result flex items-center gap-3 mx-2 px-3 py-2.5 rounded-lg transition-all ${
+                    className={`search-result flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                       index === selectedIndex
-                        ? "bg-white/10"
-                        : "hover:bg-white/5"
+                        ? "bg-accent text-accent-foreground"
+                        : "hover:bg-accent/50"
                     }`}
                   >
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                      <FileText className="w-4 h-4 text-gray-400" />
+                    <div className="flex-shrink-0 w-8 h-8 rounded-md bg-muted flex items-center justify-center">
+                      <FileText className="w-4 h-4 text-muted-foreground" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-medium text-sm text-white truncate">
+                      <div className="font-medium text-sm truncate">
                         {item.title}
                       </div>
-                      <div className="text-xs text-gray-500 truncate mt-0.5">
+                      <div className="text-xs text-muted-foreground truncate">
                         {item.description || sectionLabels[item.section] || item.section}
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-gray-600 flex-shrink-0" />
+                    <ArrowRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                   </Link>
                 );
               })}
@@ -146,21 +143,20 @@ export function SearchDialog({ open, onOpenChange, allDocs }: SearchDialogProps)
           )}
         </div>
 
-        <div className="flex items-center justify-between px-4 py-2.5 border-t border-white/10 text-[11px] text-gray-500">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-gray-400 font-mono text-[10px]">↑</kbd>
-              <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-gray-400 font-mono text-[10px]">↓</kbd>
-              <span>Navigate</span>
+        <div className="flex items-center justify-between px-4 py-2 border-t text-xs text-muted-foreground">
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1">
+              <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">↑↓</kbd>
+              Navigate
             </span>
-            <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-gray-400 font-mono text-[10px]">↵</kbd>
-              <span>Open</span>
+            <span className="flex items-center gap-1">
+              <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">↵</kbd>
+              Open
             </span>
           </div>
-          <span className="flex items-center gap-1.5">
-            <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-gray-400 font-mono text-[10px]">esc</kbd>
-            <span>Close</span>
+          <span className="flex items-center gap-1">
+            <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">esc</kbd>
+            Close
           </span>
         </div>
       </DialogContent>
