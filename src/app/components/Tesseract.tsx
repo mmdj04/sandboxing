@@ -35,7 +35,6 @@ export function Tesseract() {
 
     updateSize();
 
-    // 16 vertices of a 4D hypercube
     const vertices4D: number[][] = [];
     for (let i = 0; i < 16; i++) {
       vertices4D.push([
@@ -46,7 +45,6 @@ export function Tesseract() {
       ]);
     }
 
-    // 32 edges
     const edges: [number, number][] = [];
     for (let i = 0; i < 16; i++) {
       for (let j = i + 1; j < 16; j++) {
@@ -57,119 +55,115 @@ export function Tesseract() {
       }
     }
 
-    // 4D rotations
     function rotateXW(v: number[], angle: number): number[] {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      return [v[0] * cos - v[3] * sin, v[1], v[2], v[0] * sin + v[3] * cos];
+      const c = Math.cos(angle);
+      const s = Math.sin(angle);
+      return [v[0] * c - v[3] * s, v[1], v[2], v[0] * s + v[3] * c];
     }
 
     function rotateYW(v: number[], angle: number): number[] {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      return [v[0], v[1] * cos - v[3] * sin, v[2], v[1] * sin + v[3] * cos];
+      const c = Math.cos(angle);
+      const s = Math.sin(angle);
+      return [v[0], v[1] * c - v[3] * s, v[2], v[1] * s + v[3] * c];
     }
 
     function rotateZW(v: number[], angle: number): number[] {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      return [v[0], v[1], v[2] * cos - v[3] * sin, v[2] * sin + v[3] * cos];
+      const c = Math.cos(angle);
+      const s = Math.sin(angle);
+      return [v[0], v[1], v[2] * c - v[3] * s, v[2] * s + v[3] * c];
     }
 
-    // Fixed 3D rotation for optimal viewing
     function rotateFixed3D(v: number[]): number[] {
-      const angleX = Math.PI / 4;
-      const angleY = Math.PI / 4;
-
-      const cosX = Math.cos(angleX);
-      const sinX = Math.sin(angleX);
-      const y1 = v[1] * cosX - v[2] * sinX;
-      const z1 = v[1] * sinX + v[2] * cosX;
-
-      const cosY = Math.cos(angleY);
-      const sinY = Math.sin(angleY);
-      const x2 = v[0] * cosY + z1 * sinY;
-      const z2 = -v[0] * sinY + z1 * cosY;
-
+      const aX = Math.PI / 4;
+      const aY = Math.PI / 4;
+      const cX = Math.cos(aX);
+      const sX = Math.sin(aX);
+      const y1 = v[1] * cX - v[2] * sX;
+      const z1 = v[1] * sX + v[2] * cX;
+      const cY = Math.cos(aY);
+      const sY = Math.sin(aY);
+      const x2 = v[0] * cY + z1 * sY;
+      const z2 = -v[0] * sY + z1 * cY;
       return [x2, y1, z2];
     }
 
-    function project4Dto3D(v: number[], distance: number): number[] {
-      const w = distance / (distance - v[3]);
+    function project4Dto3D(v: number[], dist: number): number[] {
+      const w = dist / (dist - v[3]);
       return [v[0] * w, v[1] * w, v[2] * w];
     }
 
-    function project3Dto2D(v: number[], distance: number): number[] {
-      const z = distance / (distance - v[2]);
+    function project3Dto2D(v: number[], dist: number): number[] {
+      const z = dist / (dist - v[2]);
       return [v[0] * z, v[1] * z];
     }
 
     function render() {
+      if (!ctx || !width || !height) return;
       ctx.clearRect(0, 0, width, height);
 
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const scale = Math.min(width, height) * 0.2;
+      const cx = width / 2;
+      const cy = height / 2;
+      const sc = Math.min(width, height) * 0.2;
 
-      const rotatedVertices = vertices4D.map((v) => {
-        let result = [...v];
-        result = rotateXW(result, 1.2);
-        result = rotateYW(result, 0.8);
-        result = rotateZW(result, 1.0);
-        return result;
+      const rot4D = vertices4D.map((v) => {
+        let r = rotateXW(v, 1.2);
+        r = rotateYW(r, 0.8);
+        r = rotateZW(r, 1.0);
+        return r;
       });
 
-      const vertices3D = rotatedVertices.map((v) => project4Dto3D(v, 4));
-      const rotated3D = vertices3D.map((v) => rotateFixed3D(v));
-      const vertices2D = rotated3D.map((v) => project3Dto2D(v, 7));
+      const v3D = rot4D.map((v) => project4Dto3D(v, 4));
+      const r3D = v3D.map((v) => rotateFixed3D(v));
+      const v2D = r3D.map((v) => project3Dto2D(v, 7));
 
-      const depths = rotated3D.map((v) => v[2]);
-      const minDepth = Math.min(...depths);
-      const maxDepth = Math.max(...depths);
+      let minD = Infinity;
+      let maxD = -Infinity;
+      const depths: number[] = [];
+      for (let i = 0; i < r3D.length; i++) {
+        const d = r3D[i][2];
+        depths.push(d);
+        if (d < minD) minD = d;
+        if (d > maxD) maxD = d;
+      }
 
-      edges.forEach(([i, j]) => {
-        const v1 = vertices2D[i];
-        const v2 = vertices2D[j];
-        const depth1 = (depths[i] - minDepth) / (maxDepth - minDepth);
-        const depth2 = (depths[j] - minDepth) / (maxDepth - minDepth);
-        const avgDepth = (depth1 + depth2) / 2;
+      const range = maxD - minD || 1;
 
-        const alpha = 0.15 + avgDepth * 0.5;
-        const brightness = Math.floor(80 + avgDepth * 175);
+      for (let ei = 0; ei < edges.length; ei++) {
+        const [i, j] = edges[ei];
+        const v1 = v2D[i];
+        const v2 = v2D[j];
+        const d1 = (depths[i] - minD) / range;
+        const d2 = (depths[j] - minD) / range;
+        const avg = (d1 + d2) / 2;
+        const alpha = 0.15 + avg * 0.5;
+        const br = Math.floor(80 + avg * 175);
 
         ctx.beginPath();
-        ctx.moveTo(centerX + v1[0] * scale, centerY + v1[1] * scale);
-        ctx.lineTo(centerX + v2[0] * scale, centerY + v2[1] * scale);
-        ctx.strokeStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`;
+        ctx.moveTo(cx + v1[0] * sc, cy + v1[1] * sc);
+        ctx.lineTo(cx + v2[0] * sc, cy + v2[1] * sc);
+        ctx.strokeStyle = `rgba(${br},${br},${br},${alpha})`;
         ctx.lineWidth = 1;
         ctx.stroke();
-      });
+      }
 
-      vertices2D.forEach((v, i) => {
-        const depth = (depths[i] - minDepth) / (maxDepth - minDepth);
-        const alpha = 0.3 + depth * 0.7;
-        const brightness = Math.floor(150 + depth * 105);
-        const radius = 2 + depth * 2;
+      for (let i = 0; i < v2D.length; i++) {
+        const v = v2D[i];
+        const d = (depths[i] - minD) / range;
+        const alpha = 0.3 + d * 0.7;
+        const br = Math.floor(150 + d * 105);
+        const radius = 2 + d * 2;
 
         ctx.beginPath();
-        ctx.arc(centerX + v[0] * scale, centerY + v[1] * scale, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${brightness}, ${alpha})`;
+        ctx.arc(cx + v[0] * sc, cy + v[1] * sc, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${br},${br},${br},${alpha})`;
         ctx.fill();
-      });
-
+      }
     }
 
     render();
 
-    const handleResize = () => {
-      updateSize();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
 
   return (
@@ -184,5 +178,3 @@ export function Tesseract() {
     />
   );
 }
-
-
